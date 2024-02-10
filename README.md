@@ -1,1 +1,1 @@
-# pim-tool-project
+# ELCA Pilot Project
