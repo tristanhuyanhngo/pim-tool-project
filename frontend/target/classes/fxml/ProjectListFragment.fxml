@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      VBox.vgrow="ALWAYS"
+      stylesheets="@../styles/ProjectListFragment.css, @../styles/ProjectDetailFragment.css"
+      spacing="15"
+>
+    <padding>
+        <Insets top="25" left="30"/>
+    </padding>
+    <Label fx:id="fragmentTitle" styleClass="project-detail-fragment-title"
+           text="%MainPerspective.MainContentComponent.ProjectListFragment.label.fragmentTitle"/>
+    <Separator maxWidth="1180"/>
+    <VBox spacing="30">
+        <HBox spacing="30">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchBar" prefHeight="30" prefWidth="400"
+                           promptText="%MainPerspective.MainContentComponent.ProjectListFragment.label.searchBarPlaceholder"/>
+                <ComboBox fx:id="projectStatus" styleClass="project-detail-fragment-dropdown" prefHeight="30"
+                          prefWidth="250"
+                          promptText="%MainPerspective.MainContentComponent.ProjectListFragment.label.projectStatusComboBoxPlaceholder"/>
+            </HBox>
+            <HBox spacing="50" alignment="CENTER_LEFT">
+                <Button fx:id="searchButton"
+                        styleClass="project-detail-fragment-button, project-detail-fragment-submit-button"
+                        prefHeight="35" prefWidth="250"
+                        text="%MainPerspective.MainContentComponent.ProjectListFragment.label.searchProjectButtonLabel"
+                        />
+                <Label fx:id="resetButton" styleClass="project-list-fragment-reset-button"
+                       text="%MainPerspective.MainContentComponent.ProjectListFragment.label.resetSearchButtonLabel"/>
+            </HBox>
+        </HBox>
+        <VBox>
+            <TableView fx:id="resultTable" maxWidth="1350" minHeight="530">
+                <columns>
+                    <TableColumn fx:id="projectNumberColumn" styleClass="label-center-right"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.numberHeader"
+                                 prefWidth="100" resizable="false">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="number"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="projectNameColumn"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.nameHeader"
+                                 prefWidth="500" resizable="false">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="name"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="projectStatusColumn"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.statusHeader"
+                                 prefWidth="150" resizable="false">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="status"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="projectCustomerColumn"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.customerHeader"
+                                 prefWidth="300" resizable="false">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="customer"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="projectStartDateColumn"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.startDateHeader"
+                                 prefWidth="150" resizable="false">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="startDate"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="projectDeleteColumn"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.deleteHeader"
+                                 prefWidth="115" resizable="false"/>
+                </columns>
+            </TableView>
+            <HBox fx:id="selectedItemsContainer" styleClass="project-list-fragment-selected-items-container"
+                  maxWidth="1350" alignment="CENTER_LEFT" visible="false">
+                <padding>
+                    <Insets topRightBottomLeft="10"/>
+                </padding>
+                <Label fx:id="numberOfSelectedItems" styleClass="project-list-fragment-primary-text"/>
+                <Label fx:id="itemsSelectedText" styleClass="project-list-fragment-primary-text"
+                       text="%MainPerspective.MainContentComponent.ProjectListFragment.label.itemsSelected"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="5" alignment="CENTER_LEFT">
+                    <Label fx:id="deleteSelectedItemsText" styleClass="project-list-fragment-danger-text"
+                           text="%MainPerspective.MainContentComponent.ProjectListFragment.label.deleteSelectedItems"/>
+                    <ImageView fx:id="deleteAllButton" styleClass="project-list-fragment-delete-button"
+                               preserveRatio="true">
+                        <Image url="@../images/delete-button.png"/>
+                    </ImageView>
+                </HBox>
+            </HBox>
+        </VBox>
+        <HBox fx:id="paginationContainer" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets right="265"/>
+            </padding>
+        </HBox>
+    </VBox>
+</VBox>

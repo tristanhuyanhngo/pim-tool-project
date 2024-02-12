@@ -1,0 +1,22 @@
+.menu-projects-list-button,
+.menu-create-title {
+    -fx-font-size: 18px;
+    -fx-text-fill: #2F85FA;
+    -fx-font-weight: bold;
+}
+
+.menu-create-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.menu-create-button-active {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.menu-projects-list-button:hover,
+.menu-create-button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}

@@ -1,0 +1,63 @@
+.project-detail-fragment-title {
+    -fx-font-size: 18px;
+    -fx-text-fill: #666666;
+    -fx-font-weight: bold;
+}
+
+.project-detail-fragment-input-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: #757575;
+    -fx-font-weight: bold;
+}
+
+.project-detail-fragment-required-error-container {
+    -fx-background-color: #E57373;
+    -fx-background-radius: 5px;
+}
+
+.project-detail-fragment-required-error-message,
+.project-detail-fragment-required-error-close-button {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.project-detail-fragment-input-required-symbol {
+    -fx-text-fill: red;
+}
+
+.project-detail-fragment-text-input-error {
+    -fx-border-color: red;
+    -fx-border-radius: 2px;
+    -fx-focus-color: red;
+}
+
+.project-detail-fragment-button {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 5px;
+}
+
+.project-detail-fragment-dropdown {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
+}
+
+.project-detail-fragment-button:hover,
+.project-detail-fragment-required-error-close-button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+.project-detail-fragment-cancel-button {
+    -fx-background-color: #DEDEDE;
+}
+
+.project-detail-fragment-submit-button {
+    -fx-background-color: #2F85FA;
+    -fx-text-fill: #FFFFFF;
+}
+
+.project-detail-fragment-business-error-message {
+    -fx-text-fill: #FB4143;
+    -fx-font-size: 14px;
+}

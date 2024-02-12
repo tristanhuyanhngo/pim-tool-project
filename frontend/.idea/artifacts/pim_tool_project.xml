@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="pim-tool-project">
+    <output-path>$PROJECT_DIR$/out/artifacts/pim_tool_project</output-path>
+    <root id="root">
+      <element id="archive" name="pim_tool_project.jar">
+        <element id="module-output" name="pim-tool-project" />
+      </element>
+    </root>
+  </artifact>
+</component>

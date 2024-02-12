@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <VBox fx:id="headerContainer"/>
+    <GridPane VBox.vgrow="ALWAYS">
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS"/>
+        </rowConstraints>
+        <columnConstraints>
+            <ColumnConstraints percentWidth="20"/>
+            <ColumnConstraints percentWidth="80"/>
+        </columnConstraints>
+        <HBox fx:id="menuContainer" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <VBox fx:id="mainContentContainer" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    </GridPane>
+</VBox>
