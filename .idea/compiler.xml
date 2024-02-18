@@ -2,15 +2,31 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JacpFX-simple-quickstart" />
+        <module name="common" />
+        <module name="pim-tool-backend" />
+        <module name="pim-tool-frontend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="common" target="1.8" />
+      <module name="front-end" target="1.8" />
+      <module name="frontend" target="1.8" />
       <module name="JacpFX-simple-quickstart" target="1.8" />
+      <module name="on-boarding-exercise" target="1.8" />
+      <module name="pim-tool-backend" target="1.8" />
+      <module name="pim-tool-frontend" target="1.8" />
+      <module name="pim-tool-project" target="1.5" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="on-boarding-exercise" options="-parameters" />
+      <module name="pim-tool-backend" options="-parameters" />
+    </option>
   </component>
 </project>

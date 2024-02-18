@@ -1,12 +1,20 @@
-.project-list-fragment-reset-button {
-    -fx-font-size: 16px;
-    -fx-text-fill: #2F85FA;
-    -fx-font-weight: bold;
+/*.project-list-application {*/
+/*    -fx-background-color: #8dc78d;*/
+/*}*/
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-margin-top: 5;
+    -fx-margin-bottom: 10;
 }
 
-.project-list-fragment-reset-button:hover {
-    -fx-cursor: hand;
-    -fx-opacity: 0.8;
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f4f4f4;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #0073e6; /* Màu nền khi chọn hàng */
+    -fx-font-weight: bold;
 }
 
 .table-view .column-header,
@@ -19,7 +27,7 @@
     -fx-alignment: CENTER_LEFT;
 }
 
-.table-view .column-header.label-center-right .label {
+.table-view .column-header.table-cell-right .label {
     -fx-padding: 0 10px 0 0;
     -fx-alignment: CENTER_RIGHT;
 }
@@ -29,50 +37,23 @@
     -fx-alignment: CENTER;
 }
 
-.table-cell-delete-center {
-    -fx-padding: 0 20px 0 0;
-    -fx-alignment: CENTER;
-}
-
 .table-cell-right {
     -fx-padding: 0 10px 0 0;
     -fx-alignment: CENTER_RIGHT;
 }
 
-.project-list-fragment-delete-button {
-    -fx-background: null;
+.table-view .column-header.table-cell-center .label {
+    -fx-padding: 0 10px 0 0;
+    -fx-alignment: CENTER;
 }
 
-.project-list-fragment-delete-button:hover {
-    -fx-cursor: hand;
-    -fx-opacity: 0.8;
-}
-
-.project-list-fragment-delete-button:pressed,
-.project-list-fragment-delete-button:focused {
-    -fx-background: null;
-    -fx-border-color: transparent;
-    -fx-background-insets: 0, 0;
-    -fx-background-color: transparent;
-}
-
-.project-list-fragment-selected-items-container {
-    -fx-background-color: #CEDEE9;
-}
-
-.project-list-fragment-primary-text {
+.project-list-fragment-reset-button {
+    -fx-font-size: 16px;
     -fx-text-fill: #2F85FA;
     -fx-font-weight: bold;
-    -fx-font-size: 16px;
 }
 
-.project-list-fragment-danger-text {
-    -fx-text-fill: #FF3B31;
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-}
-
-.project-list-fragment-delete-button:hover {
+.project-list-fragment-reset-button:hover {
     -fx-cursor: hand;
     -fx-opacity: 0.8;
 }
@@ -112,13 +93,4 @@
 
 .pagination {
     -fx-page-information-visible: false;
-}
-
-.table-view .scroll-bar * {
-    -fx-min-width: 0;
-    -fx-pref-width: 0;
-    -fx-max-width: 0;
-    -fx-min-height: 0;
-    -fx-pref-height: 0;
-    -fx-max-height: 0;
 }

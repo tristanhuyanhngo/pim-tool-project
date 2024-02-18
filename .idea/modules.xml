@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/frontend/JacpFX-simple-quickstart.iml" filepath="$PROJECT_DIR$/frontend/JacpFX-simple-quickstart.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/pim-tool-project.iml" filepath="$PROJECT_DIR$/.idea/pim-tool-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/pim-tool-backend.iml" filepath="$PROJECT_DIR$/backend/pim-tool-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/pim-tool-frontend.iml" filepath="$PROJECT_DIR$/frontend/pim-tool-frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pim-tool-project.iml" filepath="$PROJECT_DIR$/pim-tool-project.iml" />
     </modules>
   </component>
 </project>

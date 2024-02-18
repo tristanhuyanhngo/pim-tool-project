@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pim-tool-project" />
+        <module name="pim-tool-frontend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="JacpFX-simple-quickstart" target="1.8" />
+      <module name="pim-tool-project" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -27,6 +27,6 @@ public class PIMToolWorkbench implements FXWorkbench {
         layout.setWorkbenchXYSize(1024, 768);
         layout.registerToolBar(ToolbarPosition.NORTH);
         layout.setStyle(StageStyle.DECORATED);
-        layout.setMenuEnabled(true);
+        layout.setMenuEnabled(false);
     }
 }

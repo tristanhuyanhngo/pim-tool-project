@@ -3,7 +3,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jacpfx</groupId>
   <artifactId>pim-tool-project</artifactId>
-  <name>JacpFX-simple-quickstart</name>
   <version>1.0-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <build>
@@ -38,7 +37,7 @@
               <transformers>
                 <transformer>
                   <manifestEntries>
-                    <Main-Class>org.elca.neosis.main.ApplicationLauncher</Main-Class>
+                    <Main-Class>org.elca.neosis.PIMToolFrontendApplication</Main-Class>
                     <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
                     <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
                   </manifestEntries>

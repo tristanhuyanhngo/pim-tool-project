@@ -1,10 +1,6 @@
 package org.elca.neosis.common;
 
 public class ApplicationBundleKey {
-    public static final String PROJECT_NEW_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.new";
-    public static final String PROJECT_PLANNED_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.pla";
-    public static final String PROJECT_IN_PROGRESS_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.inp";
-    public static final String PROJECT_FINISHED_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.fin";
     public static final String EMPLOYEE_VISAS_NOT_EXISTED_MESSAGE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.employeeVisasNotExisted";
     public static final String LABEL_HELP_BUTTON = "MainPerspective.HeaderComponent.label.helpButton";
     public static final String LABEL_LOGOUT_BUTTON = "MainPerspective.HeaderComponent.label.logoutButton";
@@ -56,4 +52,10 @@ public class ApplicationBundleKey {
     public static final String LABEL_ERROR_DELETING_DIALOG_TITLE = "MainPerspective.MainContentComponent.ErrorDeletingDialog.label.title";
     public static final String LABEL_ERROR_DELETING_DIALOG_HEADER = "MainPerspective.MainContentComponent.ErrorDeletingDialog.label.header";
     public static final String LABEL_ERROR_DELETING_DIALOG_CONTENT = "MainPerspective.MainContentComponent.ErrorDeletingDialog.label.content";
+    public static final String PROJECT_NEW_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.new";
+    public static final String PROJECT_PLANNED_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.pla";
+    public static final String PROJECT_IN_PROGRESS_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.inp";
+    public static final String PROJECT_FINISHED_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.fin";
+    public static final String BUTTON_OK_DIALOG_CONFIRM = "MainPerspective.MainContentComponent.DialogConfirm.button.ok";
+//    public static final String BUTTON_OK_DIALOG_CONFIRM = "MainPerspective.MainContentComponent.DialogConfirm.button.ok";
 }

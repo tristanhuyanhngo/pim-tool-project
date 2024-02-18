@@ -1,3 +1,12 @@
+/*.header-application {*/
+/*    -fx-background-color: rgba(101, 144, 238, 0.64);*/
+/*}*/
+
+.header-short-separator {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+
+}
 .header-application-title {
     -fx-font-size: 28px;
     -fx-font-weight: bold;

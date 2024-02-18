@@ -1,0 +1,6 @@
+
+p	java:S116	"ORename this field "PORT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„·Úºùÿÿÿÿ8¥Ö¸Ú1
+C
+java:S1170	"!Make this final field static too.(„·Úºùÿÿÿÿ8¦Ö¸Ú1
+»
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(×ı÷úÿÿÿÿ8¨Ö¸Ú1

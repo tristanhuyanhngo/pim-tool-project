@@ -1,63 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jacpfx</groupId>
-    <artifactId>pim-tool-project</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>JacpFX-simple-quickstart</name>
-    <url>http://maven.apache.org</url>
+    <parent>
+        <groupId>org.elca.neosis</groupId>
+        <artifactId>pim-tool-project</artifactId>
+        <version>1.25.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>pim-tool-frontend</artifactId>
+
     <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jacp.version>2.1</jacp.version>
+        <grpc.version>1.61.0</grpc.version>
+        <common.version>1.25.2-SNAPSHOT</common.version>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>junit:junit</exclude>
-                                    <exclude>jmock:*</exclude>
-                                    <exclude>*:xml-apis</exclude>
-                                    <exclude>org.apache.maven:lib:tests</exclude>
-                                    <exclude>log4j:log4j:jar:</exclude>
-                                </excludes>
 
-                            </artifactSet>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>org.elca.neosis.main.ApplicationLauncher</Main-Class>
-                                        <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
-                                        <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
-                                    </manifestEntries>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>org.jacpfx</groupId>
@@ -73,27 +35,47 @@
         </dependency>
         <dependency>
             <groupId>org.jacpfx</groupId>
-            <artifactId>jacpfx.JavaFXSpring</artifactId>
-            <version>${jacp.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <!--dependency>
-            <groupId>org.jacpfx</groupId>
-            <artifactId>jacpfx.JavaFXLauncher</artifactId>
-            <version>${jacp.version}</version>
-            <scope>compile</scope>
-        </dependency-->
-        <dependency>
-            <groupId>org.jacpfx</groupId>
             <artifactId>jacpfx.JavaFXControls</artifactId>
             <version>${jacp.version}</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.jacpfx</groupId>
+            <artifactId>jacpfx.JavaFXSpring</artifactId>
+            <version>${jacp.version}</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elca.neosis</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>${grpc.version}</version>
         </dependency>
     </dependencies>
 </project>

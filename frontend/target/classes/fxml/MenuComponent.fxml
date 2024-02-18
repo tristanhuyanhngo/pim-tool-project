@@ -4,7 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox minHeight="1000" minWidth="290" stylesheets="@../styles/MenuComponent.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<HBox minHeight="1000" minWidth="290"
+      stylesheets="@../styles/MenuComponent.css"
+      VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="menu-application"
+>
     <padding>
         <Insets left="120" />
     </padding>

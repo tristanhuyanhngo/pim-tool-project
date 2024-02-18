@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox minHeight="110" stylesheets="@../styles/HeaderComponent.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox minHeight="110" styleClass="header-application" stylesheets="@../styles/HeaderComponent.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <HBox VBox.vgrow="ALWAYS">
         <padding>
             <Insets left="200.0" />
@@ -19,14 +19,19 @@
                <Insets left="30.0" />
             </HBox.margin></Label>
         </HBox>
-        <HBox spacing="180">
+        <HBox spacing="150">
             <padding>
-                <Insets left="900" />
+                <Insets left="500" />
             </padding>
             <HBox alignment="CENTER" spacing="5">
                 <Label fx:id="labelEN" styleClass="header-language-option, header-language-option-active" text="%MainPerspective.HeaderComponent.label.languageEN" />
-                <Separator maxHeight="30" orientation="VERTICAL" />
+<!--                <Separator maxHeight="30" orientation="VERTICAL" />-->
+                <Label styleClass="header-short-separator">|</Label>
                 <Label fx:id="labelFR" styleClass="header-language-option" text="%MainPerspective.HeaderComponent.label.languageFR" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="75">
+                <Label fx:id="labelHelpButton" styleClass="header-button, header-help-button" text="%MainPerspective.HeaderComponent.label.helpButton" />
+                <Label fx:id="labelLogoutButton" styleClass="header-button, header-logout-button" text="%MainPerspective.HeaderComponent.label.logoutButton" />
             </HBox>
         </HBox>
     </HBox>

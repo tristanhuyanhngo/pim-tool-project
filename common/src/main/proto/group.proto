@@ -1,0 +1,13 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package org.elca.neosis.proto;
+
+message GroupRequest {}
+
+message GroupResponse {
+  repeated int64 id = 1;
+}
+
+service GroupService {
+  rpc GetAllGroups(GroupRequest) returns (GroupResponse);
+}

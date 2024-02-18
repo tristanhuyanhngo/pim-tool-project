@@ -4,7 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="15" stylesheets="@../styles/ProjectDetailFragment.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox spacing="15"
+      stylesheets="@../styles/ProjectDetailFragment.css"
+      VBox.vgrow="ALWAYS"
+      xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="project-detail-application">
     <padding>
         <Insets left="30" top="25" />
     </padding>

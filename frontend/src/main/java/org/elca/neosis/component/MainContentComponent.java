@@ -30,7 +30,7 @@ public class MainContentComponent implements FXComponent {
 
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
-        this.root = initProjectDetailFragment();
+        this.root = initProjectListFragment();
 
         return this.root;
     }
@@ -40,9 +40,21 @@ public class MainContentComponent implements FXComponent {
         return null;
     }
 
+    private Node initProjectListFragment() {
+        final VBox container = new VBox();
+        VBox.setVgrow(container, Priority.ALWAYS);
+        final ManagedFragmentHandler<ProjectListFragment> handler = context.getManagedFragmentHandler(ProjectListFragment.class);
+        final ProjectListFragment controller = handler.getController();
+        controller.init();
+        container.getChildren().addAll(handler.getFragmentNode());
+        return container;
+    }
+
     private Node initProjectDetailFragment() {
         final VBox container = new VBox();
-        final ManagedFragmentHandler<ProjectListFragment> handler = context.getManagedFragmentHandler(ProjectListFragment.class);
+        VBox.setVgrow(container, Priority.ALWAYS);
+        final ManagedFragmentHandler<ProjectDetailFragment> handler = context.getManagedFragmentHandler(ProjectDetailFragment.class);
+        final ProjectDetailFragment controller = handler.getController();
         container.getChildren().addAll(handler.getFragmentNode());
         return container;
     }
