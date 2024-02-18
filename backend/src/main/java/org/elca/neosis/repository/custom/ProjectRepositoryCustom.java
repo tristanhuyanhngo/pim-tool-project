@@ -10,6 +10,10 @@ public interface ProjectRepositoryCustom {
     List<Project> findAllProjects();
 
     List<Project> findAllProjectsWithCondition(SearchConditionDTO condition);
+    List<Long> findAllProjectIDsByProjectNumber(List<Integer> projectNumbers);
 
     long countProjectsWithCondition(CountConditionDTO condition);
+
+    void deleteMultipleProjectsByIDs(List<Long> projectIDs);
+    Project findProjectByProjectNumber(Integer number);
 }

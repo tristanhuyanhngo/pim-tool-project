@@ -1,0 +1,16 @@
+.connection-error-fragment-container {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.connection-error-fragment-main-color {
+    -fx-text-fill: #7C8184;
+}
+
+.connection-error-fragment-red-color {
+    -fx-text-fill: #E57373;
+}
+
+.connection-error-fragment-blue-color {
+    -fx-text-fill: #2F85FA;
+}

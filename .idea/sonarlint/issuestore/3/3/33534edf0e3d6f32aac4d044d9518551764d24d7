@@ -1,11 +1,7 @@
 
-n
-java:S1450"SRemove the "root" field and declare it as a local variable in the relevant methods.(å‡¡ÿÿÿÿÿ
 [
-java:S18549">Remove this useless assignment to local variable "controller".(ˆ¡ø8–‰™‹Û1
+java:S1854J">Remove this useless assignment to local variable "controller".(ˆ¡ø8–‰™‹Û1
 L
-java:S14819"/Remove this unused "controller" local variable.(ˆ¡ø8–‰™‹Û1
-X
-java:S1128";Remove this unused import 'javafx.scene.layout.AnchorPane'.(Ø µ8–‰™‹Û1
+java:S1481J"/Remove this unused "controller" local variable.(ˆ¡ø8–‰™‹Û1
 `
-java:S11445">Remove this unused private "initProjectDetailFragment" method.(á™Êôıÿÿÿÿ8ù¬òÛ1
+java:S1144F">Remove this unused private "initProjectDetailFragment" method.(á™Êôıÿÿÿÿ8÷çìäÛ1

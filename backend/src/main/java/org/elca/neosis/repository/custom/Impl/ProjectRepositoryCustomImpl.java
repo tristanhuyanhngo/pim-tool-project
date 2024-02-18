@@ -2,6 +2,7 @@ package org.elca.neosis.repository.custom.Impl;
 import com.querydsl.core.BooleanBuilder;
 
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.elca.neosis.model.dto.CountConditionDTO;
 import org.elca.neosis.model.dto.SearchConditionDTO;
@@ -37,11 +38,29 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
         int pageSize = condition.getPageSize();
         int pageNumber = condition.getPageNumber();
 
-        JPAQuery<Project> query = buildSearchQuery(project, keywords, haveStatus, status);
+        BooleanBuilder builder = buildSearchQuery(project, keywords, status);
+
+        JPAQuery<Project> query = new JPAQuery<>(em)
+                .select(project)
+                .from(project)
+                .where(builder);
+
+        if (haveStatus) {
+            query.where(project.status.eq(status));
+        }
 
         return query
                 .limit(pageSize)
                 .offset((long) pageNumber * pageSize)
+                .fetch();
+    }
+
+    @Override
+    public List<Long> findAllProjectIDsByProjectNumber(List<Integer> projectNumbers) {
+        return new JPAQuery<>(em)
+                .select(QProject.project.id)
+                .from(QProject.project)
+                .where(QProject.project.number.in(projectNumbers))
                 .fetch();
     }
 
@@ -54,20 +73,7 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
         boolean haveStatus = condition.getHaveStatus();
         ProjectStatus status = condition.getStatus();
 
-        JPAQuery<Project> query = buildSearchQuery(project, keywords, haveStatus, status);
-
-        return query.fetchCount();
-    }
-
-    private JPAQuery<Project> buildSearchQuery(QProject project, String keywords, boolean haveStatus, ProjectStatus status) {
-        BooleanBuilder builder = new BooleanBuilder();
-
-        // In case of the keywords is a numeric
-        if (StringUtils.isNumeric(keywords)) {
-            builder.or(project.number.eq(Integer.parseInt(keywords)));
-        }
-        // General case
-        builder.or(project.name.containsIgnoreCase(keywords).or(project.customer.containsIgnoreCase(keywords)));
+        BooleanBuilder builder = buildSearchQuery(project, keywords, status);
 
         JPAQuery<Project> query = new JPAQuery<>(em)
                 .select(project)
@@ -78,6 +84,39 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
             query.where(project.status.eq(status));
         }
 
-        return query;
+        return query.fetchCount();
+    }
+
+    @Override
+    public void deleteMultipleProjectsByIDs(List<Long> projectIDs) {
+        QProject project = QProject.project;
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        queryFactory.delete(project)
+                .where(project.id.in(projectIDs))
+                .execute();
+    }
+
+    @Override
+    public Project findProjectByProjectNumber(Integer number) {
+        QProject project = QProject.project;
+
+        return new JPAQuery<>(em)
+                .select(project)
+                .from(project)
+                .where(project.number.eq(number))
+                .fetchOne();
+    }
+
+    private BooleanBuilder buildSearchQuery(QProject project, String keywords, ProjectStatus status) {
+        BooleanBuilder builder = new BooleanBuilder();
+        // In case of the keywords is a numeric
+        if (StringUtils.isNumeric(keywords)) {
+            builder.or(project.number.eq(Integer.parseInt(keywords)));
+        }
+        // General case
+        builder.or(project.name.containsIgnoreCase(keywords).or(project.customer.containsIgnoreCase(keywords)));
+
+        return builder;
     }
 }

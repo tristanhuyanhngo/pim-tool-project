@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.elca.neosis.config.JacpFXConfig;
+import org.elca.neosis.fragment.ConnectionErrorFragment;
 import org.elca.neosis.fragment.ProjectDetailFragment;
 import org.elca.neosis.fragment.ProjectListFragment;
 import org.jacpfx.api.annotations.Resource;
@@ -14,6 +15,7 @@ import org.jacpfx.api.message.Message;
 import org.jacpfx.rcp.component.FXComponent;
 import org.jacpfx.rcp.components.managedFragment.ManagedFragmentHandler;
 import org.jacpfx.rcp.context.Context;
+import org.jacpfx.rcp.util.FXUtil;
 
 @View(
         name = MainContentComponent.ID,
@@ -30,14 +32,29 @@ public class MainContentComponent implements FXComponent {
 
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
-        this.root = initProjectListFragment();
-
+        if (!message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
+            if (message.getMessageBody().equals(ProjectListFragment.ID)) {
+                this.root = initProjectListFragment();
+            } else if (message.getMessageBody().equals(ConnectionErrorFragment.ID)) {
+                this.root = initConnectionErrorFragment();
+            }
+        }
         return this.root;
     }
 
     @Override
     public Node handle(Message<Event, Object> message) throws Exception {
         return null;
+    }
+
+    private Node initConnectionErrorFragment() {
+        final VBox container = new VBox();
+        VBox.setVgrow(container, Priority.ALWAYS);
+        final ManagedFragmentHandler<ConnectionErrorFragment> handler = context.getManagedFragmentHandler(ConnectionErrorFragment.class);
+        final ConnectionErrorFragment controller = handler.getController();
+        controller.init();
+        container.getChildren().addAll(handler.getFragmentNode());
+        return container;
     }
 
     private Node initProjectListFragment() {

@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import org.elca.neosis.common.ui.NotificationAlert;
 import org.elca.neosis.component.MainContentComponent;
 import org.elca.neosis.factory.ObservableResourceFactory;
 import org.elca.neosis.grpc.Grpc;
@@ -207,7 +208,7 @@ public class ProjectListFragment {
         return new DeleteButtonCell();
     }
 
-    private static class DeleteButtonCell extends TableCell<ProjectSearchResult, Void> {
+    private class DeleteButtonCell extends TableCell<ProjectSearchResult, Void> {
         private final Button deleteButton;
 
         public DeleteButtonCell() {
@@ -245,18 +246,17 @@ public class ProjectListFragment {
         private void handleDeleteButtonClick() {
             ProjectSearchResult project = getTableView().getItems().get(getIndex());
             ConfirmationAlert confirmDialog = new ConfirmationAlert("Confirm Delete",
-                    null,
-                    "Are you sure you want to delete the project: " + project.getName() + " ?",
+                    "Are you sure ?",
+                    "Do you really want to delete the project \"" + project.getName() + "\" ? This process cannot be undone.",
                     "Delete",
                     "Cancel",
                     "#ff0000",
-                    "#ffffff");
+                    "#cccccc",
+                    Alert.AlertType.WARNING);
             boolean confirmed = confirmDialog.showConfirmationDialog();
 
             if (confirmed) {
-                System.out.println("User choose delete");
-            } else {
-               System.out.println("User choose cancel");
+                deleteProject(project.getNumber());
             }
         }
     }
@@ -393,6 +393,31 @@ public class ProjectListFragment {
                     .setPageSize(PAGE_SIZE)
                     .setPageNumber(pageNumber)
                     .build());
+        }
+    }
+
+    private void deleteProject(Integer projectNumber) {
+        try {
+            Grpc client = Grpc.getInstance();
+            ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
+            DeleteProjectResponse response = stub.deleteProject(ListProjectNumber
+                    .newBuilder()
+                    .addNumber(projectNumber)
+                    .build());
+            if (response.getIsSuccess()) {
+                initPagination();
+                getProjectsWithPagination(pageNumber);
+                selectedProjectNumbers.clear();
+                selectedItemsContainer.setVisible(false);
+            } else {
+                NotificationAlert notificationAlert= new NotificationAlert(
+                        "Error dialog",
+                        "This is an error dialog",
+                        "There was a new update about this project. Please try again later");
+                notificationAlert.showConfirmationDialog();
+            }
+        } catch (StatusRuntimeException e) {
+            context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);
         }
     }
 }

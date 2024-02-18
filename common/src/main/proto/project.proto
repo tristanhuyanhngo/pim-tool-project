@@ -40,10 +40,6 @@ message Project {
 // Request
 message Empty {}
 
-message ProjectNumberRequest {
-  int32 number = 1;
-}
-
 message SearchCondition {
   string keywords = 1;
   bool have_status = 2;
@@ -52,7 +48,7 @@ message SearchCondition {
   int32 page_number = 5;
 }
 
-message CreateProjectRequest {
+message NewProject {
   int32 number = 1;
   string name = 2;
   string customer = 3;
@@ -63,7 +59,11 @@ message CreateProjectRequest {
   string end_date = 8;
 }
 
-message DeleteProjectRequest {
+message ProjectNumber {
+  int32 number = 1;
+}
+
+message ListProjectNumber {
   repeated int32 number = 1;
 }
 
@@ -105,10 +105,10 @@ message CountProjectResponse {
 
 service ProjectService {
   rpc getAllProjects(Empty) returns (stream SearchResult);
-  rpc getProjectByNumber(ProjectNumberRequest) returns (Project);
+  rpc getProjectByNumber(ProjectNumber) returns (Project);
   rpc searchProject(SearchCondition) returns (stream SearchResult);
-  rpc createProject(CreateProjectRequest) returns (CreateProjectResponse);
-  rpc deleteProject(DeleteProjectRequest) returns (DeleteProjectResponse);
+  rpc createProject(NewProject) returns (CreateProjectResponse);
+  rpc deleteProject(ListProjectNumber) returns (DeleteProjectResponse);
   rpc updateProject(Project) returns (UpdateProjectResponse);
   rpc countAllProjectWithConditions(CountCondition) returns (CountProjectResponse);
 }

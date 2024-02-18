@@ -9,17 +9,17 @@ import java.util.Optional;
 
 @AllArgsConstructor
 public class ConfirmationAlert {
-    // Di chuyển ra 1 package các component tiện ích trên 1 cái fragment
-    private final String title;
-    private final String headerText;
-    private final String contentText;
-    private final String confirmButtonText;
-    private final String cancelButtonText;
-    private final String confirmButtonColor;
-    private final String cancelButtonColor;
+    private String title;
+    private String headerText;
+    private String contentText;
+    private String confirmButtonText;
+    private String cancelButtonText;
+    private String confirmButtonColor;
+    private String cancelButtonColor;
+    private Alert.AlertType type;
 
     public boolean showConfirmationDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
@@ -29,10 +29,8 @@ public class ConfirmationAlert {
 
         alert.getButtonTypes().setAll(confirmButton, cancelButton);
 
-        // Thiết lập màu cho nút Confirm
         alert.getDialogPane().lookupButton(confirmButton).setStyle("-fx-base: " + confirmButtonColor + ";");
 
-        // Thiết lập màu cho nút Cancel
         alert.getDialogPane().lookupButton(cancelButton).setStyle("-fx-base: " + cancelButtonColor + ";");
 
         Optional<ButtonType> result = alert.showAndWait();

@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Getter
 @Setter
 public class ProjectSearchResult {
-    private int number;
+    private Integer number;
     private String name;
     private String status;
     private String customer;
