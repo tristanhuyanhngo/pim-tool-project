@@ -1,7 +1,7 @@
 
 ^
-java:S1075,"ARefactor your code to get this URI from a customizable parameter.(™¹š€8¿™äÛ1
-G
-java:S3398")Move this method into "DeleteButtonCell".(òªíá8Ø¤™äÛ1
+java:S1075,"ARefactor your code to get this URI from a customizable parameter.(™¹š€8Ç”ŒÜ1
 Q
-java:S1144·"3Remove this unused private "getAllProjects" method.(æÎö8Û™äÛ1
+java:S1128"4Remove this unused import 'java.util.stream.Stream'.(ó÷”8„ÿ¼ŒÜ1
+Q
+java:S1144Õ"3Remove this unused private "getAllProjects" method.(æÎö8İª¡ŒÜ1

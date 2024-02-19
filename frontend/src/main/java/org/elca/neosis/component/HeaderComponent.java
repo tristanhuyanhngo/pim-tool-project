@@ -25,8 +25,6 @@ public class HeaderComponent implements FXComponent {
     public static final String ID = "HeaderComponent";
     public static final String LANGUAGE_OPTION_ACTIVE = "header-language-option-active";
 
-//    @Autowired
-//    private ObservableResourceFactory observableResourceFactory;
     @FXML
     private Label labelFR;
 

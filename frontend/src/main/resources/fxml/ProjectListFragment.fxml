@@ -57,15 +57,15 @@
                             <PropertyValueFactory property="customer" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectStartDateColumn" prefWidth="150" resizable="false" styleClass="table-cell-center" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.startDateHeader">
+                    <TableColumn fx:id="projectStartDateColumn" prefWidth="151" resizable="false" styleClass="table-cell-center" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.startDateHeader">
                         <cellValueFactory>
                             <PropertyValueFactory property="startDate" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectDeleteColumn" prefWidth="115" resizable="false" styleClass="table-cell-center" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.deleteHeader" />
+                    <TableColumn fx:id="projectDeleteColumn" prefWidth="113" resizable="false" styleClass="table-cell-center" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.deleteHeader" />
                 </columns>
             </TableView>
-            <HBox fx:id="selectedItemsContainer" alignment="CENTER_LEFT" maxWidth="1350" styleClass="project-list-fragment-selected-items-container" visible="false">
+            <HBox fx:id="selectedItemsContainer" alignment="CENTER_LEFT" maxWidth="1334" styleClass="project-list-fragment-selected-items-container" visible="false">
                 <padding>
                     <Insets topRightBottomLeft="10" />
                 </padding>

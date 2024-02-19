@@ -6,11 +6,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import org.elca.neosis.config.JacpFXConfig;
 import org.elca.neosis.factory.ObservableResourceFactory;
+import org.elca.neosis.fragment.ProjectDetailFragment;
+import org.elca.neosis.fragment.ProjectListFragment;
 import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.component.DeclarativeView;
 import org.jacpfx.api.message.Message;
 import org.jacpfx.rcp.component.FXComponent;
 import org.jacpfx.rcp.context.Context;
+
+import javax.annotation.PostConstruct;
 
 @DeclarativeView(
         name = MenuComponent.ID,
@@ -18,12 +22,10 @@ import org.jacpfx.rcp.context.Context;
         viewLocation = "/fxml/MenuComponent.fxml",
         initialTargetLayoutId = JacpFXConfig.MENU_CONTAINER,
         resourceBundleLocation = ObservableResourceFactory.RESOURCE_BUNDLE_NAME
+
 )
 public class MenuComponent implements FXComponent {
     public static final String ID = "MenuComponent";
-
-    //    @Autowired
-//    private ObservableResourceFactory observableResourceFactory;
 
     @FXML
     private Label labelProjectLists;
@@ -52,4 +54,11 @@ public class MenuComponent implements FXComponent {
     public Node handle(Message<Event, Object> message) throws Exception {
         return null;
     }
+
+//    @PostConstruct
+//    public void onPostConstructComponent() {
+//        labelProjectLists.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectListFragment.ID));
+//        labelNew.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));
+//        labelNewProject.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));
+//    }
 }

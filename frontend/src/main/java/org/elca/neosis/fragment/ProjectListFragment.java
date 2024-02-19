@@ -125,6 +125,7 @@ public class ProjectListFragment {
         getProjectsWithPagination(FIRST_PAGE_INDEX);
         initSearchBarListener();
         initProjectStatusListener();
+        setupDeleteAllButtonAction();
     }
 
     private void initSearchBarListener() {
@@ -173,23 +174,22 @@ public class ProjectListFragment {
 
         columnSelected.setCellValueFactory(cellData -> {
             CheckBox checkBox = new CheckBox();
-            return new SimpleObjectProperty<>(checkBox);
-        });
-        columnSelected.setCellFactory(col -> new TableCell<ProjectSearchResult, CheckBox>() {
-            @Override
-            protected void updateItem(CheckBox checkBox, boolean empty) {
-                super.updateItem(checkBox, empty);
-                if (empty || checkBox == null) {
-                    setGraphic(null);
-                } else {
-                    ProjectSearchResult result = (ProjectSearchResult) getTableRow().getItem();
-                    if (result != null && "New".equals(result.getStatus())) {
-                        setGraphic(checkBox);
+            ProjectSearchResult result = cellData.getValue();
+            if (Objects.equals(ApplicationMapper.convertToProjectStatus(result.getStatus()), ProjectStatus.NEW)) {
+                checkBox.setSelected(selectedProjectNumbers.contains(result.getNumber()));
+                checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    if (Boolean.TRUE.equals(newValue)) {
+                        selectedProjectNumbers.add(result.getNumber());
                     } else {
-                        setGraphic(null);
+                        selectedProjectNumbers.remove(result.getNumber());
                     }
-                }
+                    observeSelectedItemsContainer();
+                });
             }
+            else {
+                checkBox.setDisable(true);
+            }
+            return new SimpleObjectProperty<>(checkBox);
         });
         projectTableView.getColumns().add(FIRST_COLUMN_INDEX, columnSelected);
     }
@@ -256,8 +256,39 @@ public class ProjectListFragment {
             boolean confirmed = confirmDialog.showConfirmationDialog();
 
             if (confirmed) {
-                deleteProject(project.getNumber());
+                // Check if the project is selected, if yes remove it out of the selected List
+                if (selectedProjectNumbers.contains(project.getNumber())) {
+                    selectedProjectNumbers.remove(project.getNumber());
+                }
+                List<Integer> projectNumbers = Arrays.asList(project.getNumber());
+                deleteProjects(projectNumbers);
+
+                // Update table view
+                initPagination();
+                getProjectsWithPagination(pageNumber);
+                observeSelectedItemsContainer();
             }
+        }
+    }
+
+    private void setupDeleteAllButtonAction() {
+        deleteAllButton.setOnMouseClicked(event -> handleDeleteAllButtonClick());
+    }
+
+    private void handleDeleteAllButtonClick() {
+        ConfirmationAlert confirmDialog = new ConfirmationAlert("Confirm Delete",
+                "Are you sure?",
+                "Do you really want to delete all projects?",
+                "Delete",
+                "Cancel",
+                "#ff0000",
+                "#cccccc",
+                Alert.AlertType.WARNING);
+        boolean confirmed = confirmDialog.showConfirmationDialog();
+
+        if (confirmed) {
+            deleteProjects(selectedProjectNumbers);
+            updateTableView(pageNumber);
         }
     }
 
@@ -270,6 +301,10 @@ public class ProjectListFragment {
         if (totalProjects > 0) {
             int bonusPage = (totalProjects % PAGE_SIZE == 0) ? 0 : 1;
             int totalPages = (int) (totalProjects / PAGE_SIZE) + bonusPage;
+
+            if (pageNumber + 1 >= totalPages) {
+                pageNumber = totalPages - 1;
+            }
 
             Pagination pagination = new Pagination(totalPages, pageNumber);
             pagination.setPrefHeight(PAGINATION_PREF_HEIGHT);
@@ -293,19 +328,14 @@ public class ProjectListFragment {
 
     private void initProjectStatus() {
         // Get the project status from file Proto
-        projectStatusCombobox.getItems().setAll(Stream.of(ProjectStatus.values())
-                .map(ApplicationMapper::convertToProjectStatus)
-                .toArray(String[]::new));
+        projectStatusCombobox.getItems().addAll("New", "Planned", "In progress", "Finished");
         // Set the default project status
         projectStatusCombobox.setValue(currentSelectedStatusIndex == -1 ? null : projectStatusCombobox.getItems().get(currentSelectedStatusIndex));
     }
 
     @FXML
     private void handleSearchButtonClick(ActionEvent event) {
-        initPagination();
-        getProjectsWithPagination(FIRST_PAGE_INDEX);
-        selectedItemsContainer.setVisible(false);
-        selectedProjectNumbers.clear();
+        updateTableView(FIRST_PAGE_INDEX);
     }
 
     private void getAllProjects() {
@@ -396,20 +426,14 @@ public class ProjectListFragment {
         }
     }
 
-    private void deleteProject(Integer projectNumber) {
+    private void deleteProjects(List<Integer> projectNumbers) {
         try {
             Grpc client = Grpc.getInstance();
             ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
-            DeleteProjectResponse response = stub.deleteProject(ListProjectNumber
-                    .newBuilder()
-                    .addNumber(projectNumber)
+            DeleteProjectResponse response = stub.deleteProject(ListProjectNumber.newBuilder()
+                    .addAllNumber(projectNumbers)
                     .build());
-            if (response.getIsSuccess()) {
-                initPagination();
-                getProjectsWithPagination(pageNumber);
-                selectedProjectNumbers.clear();
-                selectedItemsContainer.setVisible(false);
-            } else {
+            if (!response.getIsSuccess()) {
                 NotificationAlert notificationAlert= new NotificationAlert(
                         "Error dialog",
                         "This is an error dialog",
@@ -418,6 +442,22 @@ public class ProjectListFragment {
             }
         } catch (StatusRuntimeException e) {
             context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);
+        }
+    }
+
+    private void updateTableView(int pageNumber) {
+        initPagination();
+        getProjectsWithPagination(pageNumber);
+        selectedProjectNumbers.clear();
+        selectedItemsContainer.setVisible(false);
+    }
+
+    private void observeSelectedItemsContainer() {
+        if (selectedProjectNumbers.isEmpty()) {
+            selectedItemsContainer.setVisible(false);
+        } else {
+            selectedItemsContainer.setVisible(true);
+            numberOfSelectedItems.setText(selectedProjectNumbers.size() + " ");
         }
     }
 }

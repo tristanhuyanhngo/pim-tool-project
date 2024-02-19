@@ -108,12 +108,6 @@ Ffrontend/src/main/java/org/elca/neosis/model/SearchConditionState.java,0\2\020
 ]backend/src/main/java/org/elca/neosis/repository/custom/Impl/ProjectRepositoryCustomImpl.java,3\3\33ed4fdb9b510f5e14ec037a2e0063afb290b436
 v
 Ffrontend/src/main/java/org/elca/neosis/workbench/PIMToolWorkbench.java,6\4\648df14191e1509140fa1a3de7b532d2682150e0
-|
-Lfrontend/src/main/java/org/elca/neosis/controller/ProjectListController.java,8\6\868cb8455588818c409e77397623d82202c2571a
-~
-Nfrontend/src/main/java/org/elca/neosis/controller/ProjectDetailController.java,f\2\f29a48519e7fbb18904645353b69a7e6243938ce
-€
-Pfrontend/src/main/java/org/elca/neosis/controller/ConnectionErrorController.java,1\9\197a3d5c9c9aad4ba2d6804e608389645ea75dd3
 w
 Gfrontend/src/main/java/org/elca/neosis/common/ui/ConfirmationAlert.java,a\1\a11c7a7f18a04757ee75c0dbe4b7d45503276719
 w
@@ -126,3 +120,9 @@ w
 Gfrontend/src/main/java/org/elca/neosis/common/ui/NotificationAlert.java,3\7\37dfe46d9760cbfd0306b0dc9d9df00c86454273
 o
 ?frontend/src/main/java/org/elca/neosis/config/JacpFXConfig.java,a\1\a181113bcdd0a2ae1276d735fbd64cea660879aa
+w
+Gfrontend/src/main/java/org/elca/neosis/perspective/MainPerspective.java,a\3\a3432062719198499461b952bf86c4c897528c03
+o
+?backend/src/main/java/org/elca/neosis/model/dto/ProjectDTO.java,c\4\c4efe9daa5aa9f496ace3143781464bec90040d3
+v
+Fbackend/src/main/java/org/elca/neosis/model/dto/CountConditionDTO.java,8\9\896a54c9522d58a56446048b575dd40b76bf5f0a

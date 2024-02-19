@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.elca.neosis.model.dto.CountConditionDTO;
+import org.elca.neosis.model.dto.ProjectDTO;
 import org.elca.neosis.model.dto.SearchConditionDTO;
 import org.elca.neosis.model.entity.Project;
 import org.elca.neosis.model.entity.QProject;
@@ -95,6 +96,11 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
         queryFactory.delete(project)
                 .where(project.id.in(projectIDs))
                 .execute();
+    }
+
+    @Override
+    public void createNewProjects(ProjectDTO project) {
+
     }
 
     @Override

@@ -1,0 +1,13 @@
+
+M
+java:S1066Ä"/Merge this if statement with the enclosing one.(ãÒÂ8ˆ¦ë…Ü1
+f
+java:S1128"JRemove this unused import 'com.sun.javafx.css.converters.StringConverter'.(´—¿)8Á¦ë…Ü1
+h
+java:S1128"KRemove this unused import 'javafx.util.converter.CharacterStringConverter'.(Úª¸Œ8Á¦ë…Ü1
+h
+java:S1128"FRemove this unused import 'org.elca.neosis.model.ProjectSearchResult'.(Îå¶àıÿÿÿÿ8Á¦ë…Ü1
+L
+java:S1128"/Remove this unused import 'java.util.Iterator'.(¥ÍòÕ8Á¦ë…Ü1
+w
+java:S1128"ZRemove this unused import 'org.elca.neosis.util.ApplicationMapper.convertToProjectStatus'.(ë‰´Ü8Á¦ë…Ü1

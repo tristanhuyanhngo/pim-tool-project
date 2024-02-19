@@ -94,3 +94,25 @@
 .pagination {
     -fx-page-information-visible: false;
 }
+
+.project-list-fragment-selected-items-container {
+    -fx-background-color: #edf7f7;
+    -fx-border-color: lightgray;
+}
+
+.project-list-fragment-primary-text {
+    -fx-text-fill: #2F85FA;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.project-list-fragment-danger-text {
+    -fx-text-fill: #FF3B31;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.project-list-fragment-delete-button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}

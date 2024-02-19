@@ -15,25 +15,28 @@
 }
 
 .project-detail-fragment-required-error-container {
-    -fx-background-color: #E57373;
-    -fx-background-radius: 5px;
+    -fx-background-color: #fee8e8;
+    -fx-background-radius: 6px;
+    -fx-font-weight: bold;
 }
 
 .project-detail-fragment-required-error-message,
 .project-detail-fragment-required-error-close-button {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: red;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
 }
 
 .project-detail-fragment-input-required-symbol {
     -fx-text-fill: red;
+    -fx-font-weight: bold;
 }
 
 .project-detail-fragment-text-input-error {
     -fx-border-color: red;
     -fx-border-radius: 2px;
     -fx-focus-color: red;
+    -fx-font-weight: bold;
 }
 
 .project-detail-fragment-button {
@@ -54,14 +57,21 @@
 
 .project-detail-fragment-cancel-button {
     -fx-background-color: #DEDEDE;
+    -fx-font-weight: bold;
 }
 
 .project-detail-fragment-submit-button {
     -fx-background-color: #2F85FA;
     -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
 }
 
 .project-detail-fragment-business-error-message {
     -fx-text-fill: #FB4143;
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.project-detail-fragment-required-error-close-button {
+    -fx-text-fill: #636363;
 }
