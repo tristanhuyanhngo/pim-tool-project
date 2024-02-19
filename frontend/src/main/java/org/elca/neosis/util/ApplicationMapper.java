@@ -4,6 +4,9 @@ import org.elca.neosis.proto.ProjectStatus;
 
 public class ApplicationMapper {
     public static String convertToProjectStatus(ProjectStatus status) {
+        if (status == null) {
+            return null;
+        }
         switch (status) {
             case NEW:
                 return "New";
@@ -19,6 +22,9 @@ public class ApplicationMapper {
     }
 
     public static ProjectStatus convertToProjectStatus(String status) {
+        if (status == null) {
+            return null;
+        }
         switch (status) {
             case "New":
                 return ProjectStatus.NEW;

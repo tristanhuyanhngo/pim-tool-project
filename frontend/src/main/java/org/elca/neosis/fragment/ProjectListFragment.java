@@ -144,17 +144,15 @@ public class ProjectListFragment {
             searchConditionState.setKeywords("");
             searchConditionState.setStatus(null);
             currentSelectedStatusIndex = -1;
-            initPagination();
-            getProjectsWithPagination(FIRST_PAGE_INDEX);
-            selectedItemsContainer.setVisible(false);
-            selectedProjectNumbers.clear();
+            pageNumber = FIRST_PAGE_INDEX;
+            updateTableView(FIRST_PAGE_INDEX);
         });
     }
 
     private void setInitialLayout() {
         searchBar.setText(searchConditionState.getKeywords());
-        projectStatusCombobox.setValue(Objects.isNull(searchConditionState.getStatus()) ? null
-                : ApplicationMapper.convertToProjectStatus(searchConditionState.getStatus()));
+        ProjectStatus status = searchConditionState.getStatus();
+        projectStatusCombobox.setValue(status != null ? ApplicationMapper.convertToProjectStatus(status) : null);
     }
 
     private void initTableCellHeight() {
