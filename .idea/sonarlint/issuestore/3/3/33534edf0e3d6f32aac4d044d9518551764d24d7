@@ -11,5 +11,5 @@ T
 java:S1128"7Remove this unused import 'org.jacpfx.rcp.util.FXUtil'.(ÎËá¬8‚ïÒ„Ü1
 b
 java:S1144;"@Remove this unused private "initConnectionErrorFragment" method.(«æÎüÿÿÿÿ8ÆâıùÛ1
-`
-java:S1144O">Remove this unused private "initProjectDetailFragment" method.(á™Êôıÿÿÿÿ8·ÖÅ†Ü1
+Y
+java:S1144E"<Remove this unused private "initProjectListFragment" method.(úñ›ª8“›ˆÜ1

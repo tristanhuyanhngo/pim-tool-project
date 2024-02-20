@@ -7,7 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.elca.neosis.model.dto.CountConditionDTO;
 import org.elca.neosis.model.dto.ProjectDTO;
 import org.elca.neosis.model.dto.SearchConditionDTO;
+import org.elca.neosis.model.entity.Group;
 import org.elca.neosis.model.entity.Project;
+import org.elca.neosis.model.entity.QEmployee;
 import org.elca.neosis.model.entity.QProject;
 import org.elca.neosis.proto.ProjectStatus;
 import org.elca.neosis.repository.custom.ProjectRepositoryCustom;
@@ -99,8 +101,14 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
     }
 
     @Override
-    public void createNewProjects(ProjectDTO project) {
+    public Project findProjectByID(Long id) {
+        QProject project = QProject.project;
 
+        return new JPAQuery<>(em)
+                .select(project)
+                .from(project)
+                .where(project.id.eq(id))
+                .fetchOne();
     }
 
     @Override
@@ -112,6 +120,16 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
                 .from(project)
                 .where(project.number.eq(number))
                 .fetchOne();
+    }
+
+    @Override
+    public boolean findProjectNumber(Integer number) {
+        QProject project = QProject.project;
+        long count = new JPAQuery<>(em)
+                .from(project)
+                .where(project.number.eq(number))
+                .fetchCount();
+        return count > 0;
     }
 
     private BooleanBuilder buildSearchQuery(QProject project, String keywords, ProjectStatus status) {

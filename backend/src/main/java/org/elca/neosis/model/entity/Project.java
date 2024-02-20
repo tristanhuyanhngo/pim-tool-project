@@ -1,6 +1,7 @@
 package org.elca.neosis.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.elca.neosis.proto.ProjectStatus;
 
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "PROJECT")
+@NoArgsConstructor
 @Getter
 @Setter
 public class Project extends SuperClassEntity {
@@ -37,5 +39,10 @@ public class Project extends SuperClassEntity {
     private Group group;
 
     @OneToMany(mappedBy = "project")
-    private Set<ProjectEmployee> employeeProjects = new HashSet<>();
+    private Set<Employee> employeeProjects = new HashSet<Employee>();
+
+    public void addGroup(Group group) {
+        this.group = group;
+        group.getProjects().add(this);
+    }
 }

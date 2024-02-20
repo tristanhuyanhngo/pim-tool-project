@@ -1,6 +1,7 @@
 package org.elca.neosis.repository.custom.Impl;
 
 import com.querydsl.jpa.impl.JPAQuery;
+import org.elca.neosis.model.entity.Group;
 import org.elca.neosis.model.entity.QGroup;
 import org.elca.neosis.repository.custom.GroupRepositoryCustom;
 
@@ -19,5 +20,15 @@ public class GroupRepositoryCustomImpl implements GroupRepositoryCustom {
              .select(group.id)
              .from(group)
              .fetch();
+    }
+
+    @Override
+    public Group getGroupById(Long id) {
+        QGroup group = QGroup.group;
+        return new JPAQuery<>(em)
+                .select(group)
+                .from(group)
+                .where(group.id.eq(id))
+                .fetchOne();
     }
 }

@@ -2,6 +2,7 @@ package org.elca.neosis.repository.custom.Impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
+import org.elca.neosis.model.entity.Employee;
 import org.elca.neosis.model.entity.QEmployee;
 import org.elca.neosis.repository.custom.EmployeeRepositoryCustom;
 
@@ -22,5 +23,15 @@ public class EmployeeRepositoryCustomImpl implements EmployeeRepositoryCustom {
                 .where(employee.visa.eq(visa))
                 .fetchCount();
         return count > 0;
+    }
+
+    @Override
+    public List<Employee> findAllByVisa(Set<String> visas) {
+        QEmployee employee = QEmployee.employee;
+        return new JPAQuery<>(em)
+                .select(employee)
+                .from(employee)
+                .where(employee.visa.in(visas))
+                .fetch();
     }
 }

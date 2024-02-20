@@ -13,14 +13,10 @@ enum ResponseStatus {
   OPERATION_SUCCESS = 0;
   PROJECT_NUMBER_EXISTED = 1;
   EMPLOYEE_VISAS_NOT_EXISTED = 2;
-  PROJECT_START_DATE_GREATER_THAN_END_DATE = 3;
-  PROJECT_NUMBER_OUT_OF_RANGE = 4;
-  PROJECT_NAME_OUT_OF_LENGTH = 5;
-  PROJECT_CUSTOMER_OUT_OF_LENGTH = 6;
-  CAN_NOT_CREATE_PROJECT = 7;
-  CAN_NOT_UPDATE_PROJECT = 8;
-  CAN_NOT_DELETE_PROJECT = 9;
-  OTHER_ERROR = 10;
+  CAN_NOT_CREATE_PROJECT = 3;
+  CAN_NOT_UPDATE_PROJECT = 4;
+  CAN_NOT_DELETE_PROJECT = 5;
+  OTHER_ERROR = 6;
 }
 
 message Project {
@@ -82,7 +78,7 @@ message SearchResult {
   string start_date = 5;
 }
 
-message CreateProjectResponse {
+message CreateUpdateProjectResponse {
   bool is_success = 1;
   repeated ResponseStatus status = 2;
   repeated string invalid_visa = 3;
@@ -93,12 +89,6 @@ message DeleteProjectResponse {
   ResponseStatus status = 2;
 }
 
-message UpdateProjectResponse {
-  bool is_success = 1;
-  repeated ResponseStatus status = 2;
-  repeated string invalid_visa = 3;
-}
-
 message CountProjectResponse {
   uint64 quantity = 1;
 }
@@ -107,8 +97,8 @@ service ProjectService {
   rpc getAllProjects(Empty) returns (stream SearchResult);
   rpc getProjectByNumber(ProjectNumber) returns (Project);
   rpc searchProject(SearchCondition) returns (stream SearchResult);
-  rpc createProject(NewProject) returns (CreateProjectResponse);
+  rpc createProject(NewProject) returns (CreateUpdateProjectResponse);
   rpc deleteProject(ListProjectNumber) returns (DeleteProjectResponse);
-  rpc updateProject(Project) returns (UpdateProjectResponse);
+  rpc updateProject(Project) returns (CreateUpdateProjectResponse);
   rpc countAllProjectWithConditions(CountCondition) returns (CountProjectResponse);
 }

@@ -101,7 +101,7 @@ public class ProjectDetailFragment {
 
     private void initStatusProject() {
         statusInput.getItems().addAll("New", "Planned", "In progress", "Finished");
-        statusInput.setValue("New");
+        statusInput.getSelectionModel().selectFirst();
     }
 
     private void initMembersInput() {
@@ -222,7 +222,7 @@ public class ProjectDetailFragment {
             List<Long> groupIDList = groupIDs.getIdList();
             ObservableList<Long> observableGroupIDs = FXCollections.observableArrayList(groupIDList);
             groupInput.setItems(observableGroupIDs);
-            groupInput.setValue(groupInput.getValue());
+            groupInput.getSelectionModel().selectFirst();
         } catch (StatusRuntimeException e) {
             e.printStackTrace();
             context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);

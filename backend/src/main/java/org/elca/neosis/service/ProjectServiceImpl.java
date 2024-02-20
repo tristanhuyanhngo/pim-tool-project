@@ -2,10 +2,14 @@ package org.elca.neosis.service;
 
 import io.grpc.stub.StreamObserver;
 import org.elca.neosis.model.dto.CountConditionDTO;
+import org.elca.neosis.model.dto.ProjectDTO;
 import org.elca.neosis.model.dto.SearchConditionDTO;
+import org.elca.neosis.model.entity.*;
+import org.elca.neosis.model.entity.Group;
 import org.elca.neosis.model.entity.Project;
-import org.elca.neosis.model.entity.ProjectEmployee;
 import org.elca.neosis.proto.*;
+import org.elca.neosis.repository.EmployeeRepository;
+import org.elca.neosis.repository.GroupRepository;
 import org.elca.neosis.repository.ProjectEmployeeRepository;
 import org.elca.neosis.repository.ProjectRepository;
 import org.lognet.springboot.grpc.GRpcService;
@@ -14,7 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.elca.neosis.util.ApplicationMapper;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,9 +30,12 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
     public static final String DATE_TIME_FORMAT_PATTER = "dd.MM.yyyy";
     @Autowired
     private ProjectRepository projectRepository;
-
     @Autowired
     private ProjectEmployeeRepository projectEmployeeRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Override
     public void getAllProjects(Empty request, StreamObserver<SearchResult> responseObserver) {
@@ -42,8 +52,8 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
     }
 
     @Override
-    public void countAllProjectWithConditions(CountCondition condition, StreamObserver<CountProjectResponse> responseObserver) {
-        CountConditionDTO dto = ApplicationMapper.mapCountConditionProtoToDTO(condition);
+    public void countAllProjectWithConditions(CountCondition request, StreamObserver<CountProjectResponse> responseObserver) {
+        CountConditionDTO dto = ApplicationMapper.mapCountConditionProtoToDTO(request);
         long count = projectRepository.countProjectsWithCondition(dto);
         CountProjectResponse response = CountProjectResponse.newBuilder()
                 .setQuantity(count)
@@ -53,8 +63,8 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
     }
 
     @Override
-    public void searchProject(SearchCondition condition, StreamObserver<SearchResult> responseObserver) {
-        SearchConditionDTO dto = ApplicationMapper.mapSearchConditionProtoToDTO(condition);
+    public void searchProject(SearchCondition request, StreamObserver<SearchResult> responseObserver) {
+        SearchConditionDTO dto = ApplicationMapper.mapSearchConditionProtoToDTO(request);
         List<Project> projects = projectRepository.findAllProjectsWithCondition(dto);
                 projects.forEach(project -> responseObserver.onNext(
                 SearchResult.newBuilder()
@@ -68,9 +78,9 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
     }
 
     @Override
-    public void deleteProject(ListProjectNumber listProjectNumber, StreamObserver<DeleteProjectResponse> responseObserver) {
+    public void deleteProject(ListProjectNumber request, StreamObserver<DeleteProjectResponse> responseObserver) {
         try {
-            List<Integer> projectNumbers = listProjectNumber.getNumberList();
+            List<Integer> projectNumbers = request.getNumberList();
             List<Long> projectIDs = projectRepository.findAllProjectIDsByProjectNumber(projectNumbers);
 
             if (projectIDs.size() != projectNumbers.size()) {
@@ -85,6 +95,127 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
             e.printStackTrace();
             sendDeleteProjectResponse(false, ResponseStatus.OTHER_ERROR, responseObserver);
         }
+    }
+
+    @Override
+    public void createProject(NewProject request, StreamObserver<CreateUpdateProjectResponse> responseObserver) {
+        CreateUpdateProjectResponse.Builder responseBuilder = createBusinessValidationBuilder(request, false);
+        if (responseBuilder.getIsSuccess()) {
+            try {
+                ProjectDTO projectDTO = ApplicationMapper.mapProjectProtoToDTO(request);
+
+                Project project = new Project();
+                project.setNumber(projectDTO.getNumber());
+                project.setName(projectDTO.getName());
+                project.setCustomer(projectDTO.getCustomer());
+                project.setStatus(projectDTO.getStatus());
+                project.setStartDate(projectDTO.getStartDate());
+                project.setEndDate(projectDTO.getEndDate());
+
+                project.addGroup(groupRepository.getGroupById(projectDTO.getGroupId()));
+                Project savedProject = projectRepository.save(project);
+                List<Employee> employees = employeeRepository.findAllByVisa(new HashSet<>(request.getMembersList()));
+                List<ProjectEmployee> projectEmployees = employees.stream()
+                        .map(employee -> new ProjectEmployee(
+                                new ProjectEmployeeID(
+                                        savedProject.getId(),
+                                        employee.getId()),
+                                        savedProject,
+                                        employee))
+                        .collect(Collectors.toList());
+
+                projectEmployeeRepository.saveAll(projectEmployees);
+                responseBuilder.addStatus(ResponseStatus.OPERATION_SUCCESS);
+            } catch (Exception e) {
+                e.printStackTrace();
+                responseBuilder.setIsSuccess(false);
+                responseBuilder.addStatus(ResponseStatus.OTHER_ERROR);
+            }
+        }
+    }
+
+    @Override
+    public void updateProject(org.elca.neosis.proto.Project request, StreamObserver<CreateUpdateProjectResponse> responseObserver) {
+        CreateUpdateProjectResponse.Builder responseBuilder = createBusinessValidationBuilder(
+                NewProject.newBuilder()
+                        .setName(request.getName())
+                        .setNumber(request.getNumber())
+                        .setCustomer(request.getCustomer())
+                        .setStartDate(request.getStartDate())
+                        .setEndDate(request.getEndDate())
+                        .addAllMembers(request.getMembersList())
+                        .build(),
+                false
+        );
+
+        if (responseBuilder.getIsSuccess()) {
+            try {
+                Project existedProject = projectRepository.findProjectByID(request.getId());
+                // In case the project is not found in the database or is deleted just before the update commit
+                if (existedProject != null || existedProject.getVersion() != request.getVersion()) {
+                    responseBuilder
+                            .setIsSuccess(false)
+                            .addStatus(ResponseStatus.CAN_NOT_UPDATE_PROJECT);
+                } else {
+                    existedProject.setName(request.getName());
+                    existedProject.setCustomer(request.getCustomer());
+                    existedProject.setStatus(request.getStatus());
+                    existedProject.setStartDate(ApplicationMapper.convertToLocalDate(request.getStartDate()));
+                    existedProject.setEndDate(ApplicationMapper.convertToLocalDate(request.getEndDate()));
+                    existedProject.addGroup(groupRepository.getGroupById(request.getGroupId()));
+
+                    Project savedProject = projectRepository.save(existedProject);
+
+                    List<ProjectEmployee> existingProjectEmployees = projectEmployeeRepository.getAllByProjectID(request.getId());
+                    projectEmployeeRepository.deleteAll(existingProjectEmployees);
+
+                    List<Employee> employees = employeeRepository.findAllByVisa(new HashSet<>(request.getMembersList()));
+                    List<ProjectEmployee> projectEmployees = employees.stream()
+                            .map(employee -> new ProjectEmployee(
+                                    new ProjectEmployeeID(
+                                            savedProject.getId(),
+                                            employee.getId()),
+                                    savedProject,
+                                    employee))
+                            .collect(Collectors.toList());
+
+                    projectEmployeeRepository.saveAll(projectEmployees);
+                    responseBuilder.addStatus(ResponseStatus.OPERATION_SUCCESS);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                responseBuilder.setIsSuccess(false);
+                responseBuilder.addStatus(ResponseStatus.OTHER_ERROR);
+            }
+        }
+    }
+
+    private CreateUpdateProjectResponse.Builder createBusinessValidationBuilder(NewProject newProject, boolean validProjectNumber) {
+        CreateUpdateProjectResponse.Builder responseBuilder = CreateUpdateProjectResponse.newBuilder();
+        responseBuilder.setIsSuccess(true);
+        // Validation for Project Number
+        if (!validProjectNumber && (projectRepository.findProjectNumber(newProject.getNumber()))) {
+                responseBuilder
+                        .setIsSuccess(false)
+                        .addStatus(ResponseStatus.PROJECT_NUMBER_EXISTED);
+
+        }
+        // Validation for Visa
+        Set<String> invalidVisas = getInvalidVisas(new HashSet<>(newProject.getMembersList()));
+        if (!invalidVisas.isEmpty()) {
+            responseBuilder
+                    .setIsSuccess(false)
+                    .addStatus(ResponseStatus.EMPLOYEE_VISAS_NOT_EXISTED)
+                    .addAllInvalidVisa(invalidVisas);
+        }
+        return responseBuilder;
+    }
+
+    private Set<String> getInvalidVisas(Set<String> projectMembersVisas) {
+        return projectMembersVisas.stream()
+                .filter(visa -> !employeeRepository.validateVisa(visa))
+                .collect(Collectors.toSet());
     }
 
     private void sendDeleteProjectResponse(boolean isSuccess, ResponseStatus status, StreamObserver<DeleteProjectResponse> responseObserver) {

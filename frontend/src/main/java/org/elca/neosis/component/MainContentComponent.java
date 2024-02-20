@@ -33,7 +33,7 @@ public class MainContentComponent implements FXComponent {
 
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
-        this.root = initProjectListFragment();
+        this.root = initProjectDetailFragment();
 //        if (!message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
 //            if (message.getMessageBody().equals(ProjectListFragment.ID)) {
 //                this.root = initProjectListFragment();
