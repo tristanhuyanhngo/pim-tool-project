@@ -1,7 +1,9 @@
 
 ^
-java:S1075,"ARefactor your code to get this URI from a customizable parameter.(™¹š€8¯“ºÜ1
+java:S1075-"ARefactor your code to get this URI from a customizable parameter.(™¹š€8½ãÃ¯Ü1
+|
+java:S1171ª"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ8ÉãÃ¯Ü1
 Q
-java:S1128"4Remove this unused import 'java.util.stream.Stream'.(ó÷”8É“ºÜ1
+java:S1128"4Remove this unused import 'java.util.stream.Stream'.(ó÷”8ıİÄ¯Ü1
 Q
-java:S1144Ó"3Remove this unused private "getAllProjects" method.(æÎö8É“ºÜ1
+java:S1144ì"3Remove this unused private "getAllProjects" method.(æÎö8ĞãÃ¯Ü1

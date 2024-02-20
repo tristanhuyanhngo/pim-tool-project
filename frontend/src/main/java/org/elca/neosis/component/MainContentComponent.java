@@ -39,10 +39,10 @@ public class MainContentComponent implements FXComponent {
             } else if (message.getMessageBody().equals(ConnectionErrorFragment.ID)) {
                 this.root = initConnectionErrorFragment();
             } else {
-                this.root = initProjectDetailFragment();
+                this.root = initProjectDetailFragment((ListToDetailMessage) message.getMessageBody());
             }
         }
-        return initProjectDetailFragment();
+        return this.root;
     }
 
     @Override
@@ -50,10 +50,10 @@ public class MainContentComponent implements FXComponent {
         return null;
     }
 
-//    @PostConstruct
-//    public void onPostConstructComponent() {
-//        this.root = initProjectListFragment();
-//    }
+    @PostConstruct
+    public void onPostConstructComponent() {
+        this.root = initProjectListFragment();
+    }
 
     private Node initConnectionErrorFragment() {
         final VBox container = new VBox();
@@ -75,12 +75,12 @@ public class MainContentComponent implements FXComponent {
         return container;
     }
 
-    private Node initProjectDetailFragment() {
+    private Node initProjectDetailFragment(ListToDetailMessage messageBody) {
         final VBox container = new VBox();
         VBox.setVgrow(container, Priority.ALWAYS);
         final ManagedFragmentHandler<ProjectDetailFragment> handler = context.getManagedFragmentHandler(ProjectDetailFragment.class);
         final ProjectDetailFragment controller = handler.getController();
-        controller.init(0);
+        controller.init(messageBody.getProjectNumber());
         container.getChildren().addAll(handler.getFragmentNode());
         return container;
     }

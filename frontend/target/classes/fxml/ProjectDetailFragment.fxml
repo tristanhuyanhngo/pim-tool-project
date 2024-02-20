@@ -22,7 +22,7 @@
                 <Insets bottom="20" left="26" top="10" />
             </padding>
             <Label fx:id="missingRequiredFieldsMessage" minWidth="390" styleClass="project-detail-fragment-required-error-message" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.missingRequiredFields" />
-            <Label fx:id="closeBtnErrorContainer" styleClass="project-detail-fragment-required-error-close-button" text="x" />
+            <Label fx:id="closeButtonErrorContainer" styleClass="project-detail-fragment-required-error-close-button" text="x" />
         </HBox>
     </HBox>
     <VBox spacing="38">
@@ -72,11 +72,11 @@
             <VBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="4">
                 <HBox GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="2">
                     <TextField fx:id="membersInput" maxWidth="650.0" prefHeight="30" prefWidth="650.0" />
-                    <Label fx:id="projectVisaNotValid" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectVisaNotValid" visible="true">
+                    <Label fx:id="projectVisaNotValid" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectVisaNotValid" visible="false">
                         <HBox.margin>
                             <Insets left="20.0" />
                         </HBox.margin></Label>
-                    <Label fx:id="invalidVisasMessage" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" visible="true" />
+                    <Label fx:id="invalidVisasMessage" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" visible="false" />
                 </HBox>
             </VBox>
             <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="5">

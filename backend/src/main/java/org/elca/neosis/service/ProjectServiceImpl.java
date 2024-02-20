@@ -180,14 +180,14 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
                         .setEndDate(request.getEndDate())
                         .addAllMembers(request.getMembersList())
                         .build(),
-                false
+                true
         );
 
         if (responseBuilder.getIsSuccess()) {
             try {
                 Project existedProject = projectRepository.findProjectByID(request.getId());
                 // In case the project is not found in the database or is deleted just before the update commit
-                if (existedProject != null || existedProject.getVersion() != request.getVersion()) {
+                if (existedProject == null || existedProject.getVersion() != request.getVersion()) {
                     responseBuilder
                             .setIsSuccess(false)
                             .addStatus(ResponseStatus.CAN_NOT_UPDATE_PROJECT);

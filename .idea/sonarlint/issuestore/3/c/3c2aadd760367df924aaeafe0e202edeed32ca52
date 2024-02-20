@@ -1,19 +1,15 @@
 
 M
-java:S1066À"/Merge this if statement with the enclosing one.(ãÒÂ8çÜ£­Ü1
-h
-java:S1226§"JIntroduce a new variable instead of reusing the parameter "projectNumber".(±ãä¸8–“ú­Ü1
+java:S1066º"/Merge this if statement with the enclosing one.(ãÒÂ8çÜ£­Ü1
 f
-java:S2583¸"CChange this condition so that it does not always evaluate to "true"(¯šÏŒùÿÿÿÿ8É“ú­Ü1
-f
-java:S1128"JRemove this unused import 'com.sun.javafx.css.converters.StringConverter'.(´—¿)8åÅŸ®Ü1
+java:S1128"JRemove this unused import 'com.sun.javafx.css.converters.StringConverter'.(´—¿)8Š‹¸µÜ1
 W
-java:S1128"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8åÅŸ®Ü1
+java:S1128"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8‹‹¸µÜ1
 h
-java:S1128"KRemove this unused import 'javafx.util.converter.CharacterStringConverter'.(Úª¸Œ8åÅŸ®Ü1
+java:S1128"KRemove this unused import 'javafx.util.converter.CharacterStringConverter'.(Úª¸Œ8‹‹¸µÜ1
 h
-java:S1128"FRemove this unused import 'org.elca.neosis.model.ProjectSearchResult'.(Îå¶àıÿÿÿÿ8æÅŸ®Ü1
+java:S1128"FRemove this unused import 'org.elca.neosis.model.ProjectSearchResult'.(Îå¶àıÿÿÿÿ8‹‹¸µÜ1
 w
-java:S1128""ZRemove this unused import 'org.elca.neosis.util.ApplicationMapper.convertToProjectStatus'.(ë‰´Ü8æÅŸ®Ü1
+java:S1128""ZRemove this unused import 'org.elca.neosis.util.ApplicationMapper.convertToProjectStatus'.(ë‰´Ü8‹‹¸µÜ1
 W
-java:S1144Ë"4Remove this unused private "bindNodeVisible" method.(ÄÉºÄûÿÿÿÿ8°é­Ü1
+java:S1144Å"4Remove this unused private "bindNodeVisible" method.(ÄÉºÄûÿÿÿÿ8°é­Ü1

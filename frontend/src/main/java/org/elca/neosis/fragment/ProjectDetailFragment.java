@@ -91,7 +91,7 @@ public class ProjectDetailFragment {
     @FXML
     private Label invalidVisasMessage;
     @FXML
-    private Label closeBtnErrorContainer;
+    private Label closeButtonErrorContainer;
     @FXML
     public void handleCreateProject() {
         hideErrorMessage();
@@ -164,7 +164,6 @@ public class ProjectDetailFragment {
     }
 
     public void init(Integer projectNumber) {
-        projectNumber = null;
         // Init formatter
         initProjectNumberFormatter();
         initProjectNameFormatter();
@@ -176,7 +175,7 @@ public class ProjectDetailFragment {
         initGroupComboboxInput();
         initStatusProject();
         // Init handling
-        closeBtnErrorContainer.setOnMouseClicked(event -> errorContainer.setVisible(false));
+        closeButtonErrorContainer.setOnMouseClicked(event -> errorContainer.setVisible(false));
         cancelButton.setOnAction(event -> context.send(MainContentComponent.ID, ProjectListFragment.ID));
         initRequiredTextFieldChangeListener(projectNameInput, projectNameInput);
         initRequiredTextFieldChangeListener(customerInput, customerInput);
@@ -231,7 +230,7 @@ public class ProjectDetailFragment {
     private void initMembersInput() {
         membersInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[A-Z,]*")) {
-                // Loại bỏ các ký tự không phải là chữ hoa hoặc dấu ',' từ chuỗi
+                // Remove non-uppercase characters or commas from the string
                 newValue = newValue.replaceAll("[^A-Z,]", "");
                 membersInput.setText(newValue);
             }
@@ -250,7 +249,7 @@ public class ProjectDetailFragment {
             }
         });
 
-        // Luôn giữ cho endDate lớn hơn startDate ít nhất 1 ngày
+        // Ensure that endDate is always at least 1 day greater than startDate
         startDateInput.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 endDateInput.setDayCellFactory(picker -> new DateCell() {
@@ -281,13 +280,11 @@ public class ProjectDetailFragment {
     private void initProjectNameFormatter() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
-
-            // Kiểm tra xem newText có độ dài không vượt quá 50 ký tự hay không
+            // Check if newText does not exceed 50 characters in length
             if (newText.length() <= 50) {
-                return change; // Cho phép nhập
+                return change; // Allowing input
             }
-
-            return null; // Ngăn chặn ký tự không hợp lệ
+            return null; // Restricting invalid characters
         };
 
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
@@ -297,13 +294,10 @@ public class ProjectDetailFragment {
     private void initCustomerFormatter() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
-
-            // Kiểm tra xem newText có độ dài không vượt quá 50 ký tự hay không
             if (newText.length() <= 50) {
-                return change; // Cho phép nhập
+                return change;
             }
-
-            return null; // Ngăn chặn ký tự không hợp lệ
+            return null;
         };
 
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
@@ -314,14 +308,14 @@ public class ProjectDetailFragment {
     private void initProjectNumberFormatter() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
-            // Kiểm tra xem newText có chứa số hay không
+            // Check if newText contains numbers
             if (newText.matches("\\d*")) {
-                // Kiểm tra giới hạn của Integer
+                // Check the limits of Integer
                 if (newText.isEmpty() || isValidInteger(newText)) {
-                    return change; // Cho phép nhập
+                    return change; // Allowing input
                 }
             }
-            return null; // Ngăn chặn ký tự không hợp lệ
+            return null; // Restricting invalid characters
         };
 
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);

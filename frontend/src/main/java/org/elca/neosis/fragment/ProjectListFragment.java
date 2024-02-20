@@ -15,6 +15,7 @@ import org.elca.neosis.common.ui.NotificationAlert;
 import org.elca.neosis.component.MainContentComponent;
 import org.elca.neosis.factory.ObservableResourceFactory;
 import org.elca.neosis.grpc.Grpc;
+import org.elca.neosis.model.ListToDetailMessage;
 import org.elca.neosis.model.ProjectSearchResult;
 import org.elca.neosis.model.SearchConditionState;
 import org.elca.neosis.proto.*;
@@ -116,7 +117,7 @@ public class ProjectListFragment {
         initTableCellHeight();
         initProjectStatus();
         initCheckboxColumn();
-        initHyperlinkProjectNumberColumn(); // Not yet implemented
+        initHyperlinkProjectNumberColumn();
         initTableViewOrderByProjectNumber();
         initDeleteButton();
         initResetButton();
@@ -291,7 +292,31 @@ public class ProjectListFragment {
     }
 
     private void initHyperlinkProjectNumberColumn() {
-        projectNumberColumn.getStyleClass().add("CENTER_RIGHT_CELL_CSS_CLASS");
+        projectNumberColumn.setCellFactory(param -> new TableCell<ProjectSearchResult, Integer>() {
+            private final Hyperlink hyperlink = new Hyperlink();
+
+            {
+                hyperlink.setOnAction(event -> {
+                    event.consume();
+                    ProjectSearchResult project = getTableView().getItems().get(getIndex());
+                    context.send(MainContentComponent.ID, new ListToDetailMessage(ProjectDetailFragment.ID, project.getNumber()));
+                });
+            }
+
+            @Override
+            public void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    hyperlink.setText(String.valueOf(item));
+                    hyperlink.setVisited(true);
+                    setGraphic(hyperlink);
+                    getStyleClass().add(RIGHT_CELL_CSS_CLASS);
+                }
+            }
+        });
     }
 
     private void initPagination() {
