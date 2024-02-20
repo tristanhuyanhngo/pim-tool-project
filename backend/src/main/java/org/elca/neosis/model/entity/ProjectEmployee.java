@@ -18,11 +18,11 @@ public class ProjectEmployee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("projectId")
-    @JoinColumn(name = "PROJECT_ID")
+    @JoinColumn(name = "PROJECT_ID", referencedColumnName = "id")
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("employeeId")
-    @JoinColumn(name = "EMPLOYEE_ID")
+    @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "id")
     private Employee employee;
 }

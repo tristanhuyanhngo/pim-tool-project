@@ -24,7 +24,7 @@ public class PIMToolWorkbench implements FXWorkbench {
 
     @Override
     public void handleInitialLayout(final Message<Event, Object> action, final WorkbenchLayout<Node> layout, final Stage stage) {
-        layout.setWorkbenchXYSize(1024, 768);
+        layout.setWorkbenchXYSize(1920, 1100);
         layout.registerToolBar(ToolbarPosition.NORTH);
         layout.setStyle(StageStyle.DECORATED);
         layout.setMenuEnabled(false);

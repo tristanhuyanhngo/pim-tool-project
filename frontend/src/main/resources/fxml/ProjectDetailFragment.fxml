@@ -22,7 +22,7 @@
                 <Insets bottom="20" left="26" top="10" />
             </padding>
             <Label fx:id="missingRequiredFieldsMessage" minWidth="390" styleClass="project-detail-fragment-required-error-message" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.missingRequiredFields" />
-            <Label fx:id="closeBtn" styleClass="project-detail-fragment-required-error-close-button" text="x" />
+            <Label fx:id="closeBtnErrorContainer" styleClass="project-detail-fragment-required-error-close-button" text="x" />
         </HBox>
     </HBox>
     <VBox spacing="38">
@@ -66,16 +66,17 @@
             <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="4">
                 <Label fx:id="fragmentMembersInputLabel" styleClass="project-detail-fragment-input-title" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentMembersInputLabel">
                <HBox.margin>
-                  <Insets />
+                  <Insets top="3.0" />
                </HBox.margin></Label>
             </HBox>
             <VBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="4">
                 <HBox GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="2">
                     <TextField fx:id="membersInput" maxWidth="650.0" prefHeight="30" prefWidth="650.0" />
-                    <Label fx:id="projectVisaNotValid" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectVisaNotValid" visible="false">
+                    <Label fx:id="projectVisaNotValid" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectVisaNotValid" visible="true">
                         <HBox.margin>
                             <Insets left="20.0" />
                         </HBox.margin></Label>
+                    <Label fx:id="invalidVisasMessage" prefHeight="30.0" styleClass="project-detail-fragment-business-error-message" visible="true" />
                 </HBox>
             </VBox>
             <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="5">
@@ -132,6 +133,6 @@
             <Insets left="490.0" top="50.0" />
         </padding>
         <Button fx:id="cancelButton" prefHeight="35" prefWidth="175" styleClass="project-detail-fragment-button, project-detail-fragment-cancel-button" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCancelButtonLabel" />
-        <Button fx:id="submitButton" prefHeight="35" prefWidth="175" styleClass="project-detail-fragment-button, project-detail-fragment-submit-button" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCreateProjectButtonLabel" />
+        <Button fx:id="submitButton" onAction="#handleCreateProject" prefHeight="35" prefWidth="175" styleClass="project-detail-fragment-button, project-detail-fragment-submit-button" text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCreateProjectButtonLabel" />
     </HBox>
 </VBox>

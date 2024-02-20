@@ -34,4 +34,15 @@ public class EmployeeRepositoryCustomImpl implements EmployeeRepositoryCustom {
                 .where(employee.visa.in(visas))
                 .fetch();
     }
+
+    @Override
+    public List<String> getAllEmployeeVisasByIdIn(List<Long> ids) {
+        QEmployee employee = QEmployee.employee;
+
+        return new JPAQuery<>(em)
+                .select(employee.visa)
+                .from(employee)
+                .where(employee.id.in(ids))
+                .fetch();
+    }
 }

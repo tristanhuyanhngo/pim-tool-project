@@ -39,7 +39,7 @@ public class Project extends SuperClassEntity {
     private Group group;
 
     @OneToMany(mappedBy = "project")
-    private Set<Employee> employeeProjects = new HashSet<Employee>();
+    private Set<ProjectEmployee> employeeProjects = new HashSet<>();
 
     public void addGroup(Group group) {
         this.group = group;

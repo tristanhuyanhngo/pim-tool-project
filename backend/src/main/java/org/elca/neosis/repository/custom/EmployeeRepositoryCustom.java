@@ -8,4 +8,5 @@ import java.util.Set;
 public interface EmployeeRepositoryCustom {
     boolean validateVisa(String visa);
     List<Employee> findAllByVisa(Set<String> visas);
+    List<String> getAllEmployeeVisasByIdIn(List<Long> ids);
 }

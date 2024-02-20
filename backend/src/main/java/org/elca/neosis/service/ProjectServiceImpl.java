@@ -20,6 +20,7 @@ import org.elca.neosis.util.ApplicationMapper;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,38 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
                      .build()));
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getProjectByNumber(ProjectNumber request, StreamObserver<org.elca.neosis.proto.Project> responseObserver) {
+        int projectNumber = request.getNumber();
+        Project project = projectRepository.findProjectByProjectNumber(projectNumber);
+        if (project == null) {
+            responseObserver.onNext(org.elca.neosis.proto.Project.newBuilder()
+                    .setIsExisted(false)
+                    .build());
+        } else {
+            Set<ProjectEmployee> projectEmployees = project.getEmployeeProjects();
+            List<Long> employeeIds = projectEmployees.stream()
+                    .map(projectEmployee -> projectEmployee.getId().getEmployeeId())
+                    .collect(Collectors.toList());
+            List<String> employeeVisas = employeeRepository.getAllEmployeeVisasByIdIn(employeeIds);
+            responseObserver.onNext(org.elca.neosis.proto.Project.newBuilder()
+                    .setId(project.getId())
+                    .setNumber(projectNumber)
+                    .setName(project.getName())
+                    .setCustomer(project.getCustomer())
+                    .setStartDate(project.getStartDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
+                    .setEndDate(Objects.isNull(project.getEndDate()) ? "" : project.getEndDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
+                    .setVersion(project.getVersion())
+                    .setGroupId(project.getGroup().getId())
+                    .setStatus(project.getStatus())
+                    .addAllMembers(employeeVisas)
+                    .setIsExisted(true)
+                    .build());
+        }
+        responseObserver.onCompleted();
+    }
+
 
     @Override
     public void countAllProjectWithConditions(CountCondition request, StreamObserver<CountProjectResponse> responseObserver) {
@@ -132,6 +165,8 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
                 responseBuilder.addStatus(ResponseStatus.OTHER_ERROR);
             }
         }
+        responseObserver.onNext(responseBuilder.build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -189,6 +224,8 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
                 responseBuilder.addStatus(ResponseStatus.OTHER_ERROR);
             }
         }
+        responseObserver.onNext(responseBuilder.build());
+        responseObserver.onCompleted();
     }
 
     private CreateUpdateProjectResponse.Builder createBusinessValidationBuilder(NewProject newProject, boolean validProjectNumber) {

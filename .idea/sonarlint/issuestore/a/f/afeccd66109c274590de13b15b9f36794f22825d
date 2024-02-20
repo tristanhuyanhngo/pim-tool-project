@@ -1,9 +1,13 @@
 
+j
+java:S2259¾"LA "NullPointerException" could be thrown; "existedProject" is nullable here.(ì«Áù8¤¤•­Ü1
 _
-java:S6813"BRemove this field injection and use constructor injection instead.(êæÄÞ8õ—Ÿ¤Ü1
+java:S6813 "BRemove this field injection and use constructor injection instead.(êæÄÞ8¥¤•­Ü1
 _
-java:S6813!"BRemove this field injection and use constructor injection instead.(êæÄÞ8õ—Ÿ¤Ü1
+java:S6813""BRemove this field injection and use constructor injection instead.(êæÄÞ8¥¤•­Ü1
 _
-java:S6813#"BRemove this field injection and use constructor injection instead.(êæÄÞ8ö—Ÿ¤Ü1
+java:S6813$"BRemove this field injection and use constructor injection instead.(êæÄÞ8¥¤•­Ü1
 _
-java:S6813%"BRemove this field injection and use constructor injection instead.(êæÄÞ8ö—Ÿ¤Ü1
+java:S6813&"BRemove this field injection and use constructor injection instead.(êæÄÞ8¥¤•­Ü1
+a
+java:S1128"?Remove this unused import 'org.elca.neosis.model.entity.Group'.(†´•‡þÿÿÿÿ8ð»ó®Ü1

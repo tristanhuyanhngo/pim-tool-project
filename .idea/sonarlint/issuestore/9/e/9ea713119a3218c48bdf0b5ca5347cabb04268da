@@ -1,9 +1,9 @@
 
-]	java:S125;"<This block of commented-out lines of code should be removed.(¹ĞÇ²üÿÿÿÿ8…²•úÛ1
+]	java:S125;"<This block of commented-out lines of code should be removed.(¹ĞÇ²üÿÿÿÿ8«ùÌ­Ü1
 h
-java:S1128	"KRemove this unused import 'org.elca.neosis.fragment.ProjectDetailFragment'.(é‡§8†²•úÛ1
+java:S1128	"KRemove this unused import 'org.elca.neosis.fragment.ProjectDetailFragment'.(é‡§8«ùÌ­Ü1
 f
 java:S1128
-"IRemove this unused import 'org.elca.neosis.fragment.ProjectListFragment'.(­ÏŠÅ8†²•úÛ1
+"IRemove this unused import 'org.elca.neosis.fragment.ProjectListFragment'.(­ÏŠÅ8«ùÌ­Ü1
 X
-java:S1128";Remove this unused import 'javax.annotation.PostConstruct'.(›ÅÁ8†²•úÛ1
+java:S1128";Remove this unused import 'javax.annotation.PostConstruct'.(›ÅÁ8«ùÌ­Ü1

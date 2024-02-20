@@ -1,15 +1,10 @@
 
 u
-java:S1450"SRemove the "root" field and declare it as a local variable in the relevant methods.(å‡¡ÿÿÿÿÿ8¿âıùÛ1
-W	java:S125%"<This block of commented-out lines of code should be removed.(¦×ô98ÂâıùÛ1
-]	java:S1257"<This block of commented-out lines of code should be removed.(¹ĞÇ²üÿÿÿÿ8ºÏüùÛ1
-X
-java:S1128";Remove this unused import 'javafx.scene.layout.AnchorPane'.(Ø µ8‚ïÒ„Ü1
+java:S1450"SRemove the "root" field and declare it as a local variable in the relevant methods.(å‡¡ÿÿÿÿÿ8„ÔĞ­Ü1
+]	java:S1256"<This block of commented-out lines of code should be removed.(¹ĞÇ²üÿÿÿÿ8ˆÔĞ­Ü1
+h
+java:S1128"FRemove this unused import 'org.elca.neosis.model.ListToDetailMessage'.(¶ş×’ùÿÿÿÿ8 äá­Ü1
 l
-java:S1128"ORemove this unused import 'org.jacpfx.api.annotations.lifecycle.PostConstruct'.(ò™8‚ïÒ„Ü1
-T
-java:S1128"7Remove this unused import 'org.jacpfx.rcp.util.FXUtil'.(ÎËá¬8‚ïÒ„Ü1
-b
-java:S1144;"@Remove this unused private "initConnectionErrorFragment" method.(«æÎüÿÿÿÿ8ÆâıùÛ1
-Y
-java:S1144E"<Remove this unused private "initProjectListFragment" method.(úñ›ª8“›ˆÜ1
+java:S1128"ORemove this unused import 'org.jacpfx.api.annotations.lifecycle.PostConstruct'.(ò™8 äá­Ü1
+J
+java:S1068"(Remove this unused "root" private field.(å‡¡ÿÿÿÿÿ8‹ÔĞ­Ü1

@@ -1,5 +1,11 @@
 
-r	java:S117h"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡®Ïåøÿÿÿÿ8ã»…¤Ü1
 {	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(›Ğ¤Ìøÿÿÿÿ8Îë¢Ü1
 P
 java:S1172‡"-Remove this unused method parameter "status".(õ˜ğëÿÿÿÿÿ8âë¢Ü1
+c
+java:S1128"ARemove this unused import 'org.elca.neosis.model.dto.ProjectDTO'.(ÊŸÜÿÿÿÿÿ8Èõ¨Ü1
+a
+java:S1128
+"?Remove this unused import 'org.elca.neosis.model.entity.Group'.(†´•‡şÿÿÿÿ8Èõ¨Ü1
+e
+java:S1128"CRemove this unused import 'org.elca.neosis.model.entity.QEmployee'.(É«Šªúÿÿÿÿ8Èõ¨Ü1

@@ -57,6 +57,11 @@ public class MenuComponent implements FXComponent {
 
 //    @PostConstruct
 //    public void onPostConstructComponent() {
+//        labelProjectLists.textProperty().bind(observableResourceFactory.getStringBinding(ApplicationBundleKey.LBL_VIEW_PROJECT_LIST));
+//        labelNew.textProperty().bind(observableResourceFactory.getStringBinding(ApplicationBundleKey.LBL_NEW));
+//        labelNewProject.textProperty().bind(observableResourceFactory.getStringBinding(ApplicationBundleKey.LBL_CREATE_NEW_PROJECT));
+//        labelNewCustomer.textProperty().bind(observableResourceFactory.getStringBinding(ApplicationBundleKey.LBL_CREATE_NEW_CUSTOMER));
+//        labelNewSupplier.textProperty().bind(observableResourceFactory.getStringBinding(ApplicationBundleKey.LBL_CREATE_NEW_SUPPLIER));
 //        labelProjectLists.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectListFragment.ID));
 //        labelNew.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));
 //        labelNewProject.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));

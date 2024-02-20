@@ -126,3 +126,5 @@ o
 ?backend/src/main/java/org/elca/neosis/model/dto/ProjectDTO.java,c\4\c4efe9daa5aa9f496ace3143781464bec90040d3
 v
 Fbackend/src/main/java/org/elca/neosis/model/dto/CountConditionDTO.java,8\9\896a54c9522d58a56446048b575dd40b76bf5f0a
+u
+Efrontend/src/main/java/org/elca/neosis/model/ListToDetailMessage.java,8\9\897f1757ad8a6e1bbb57083fbfe04988f392b8ca

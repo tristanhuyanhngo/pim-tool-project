@@ -2,13 +2,13 @@ package org.elca.neosis.component;
 
 import javafx.event.Event;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.elca.neosis.config.JacpFXConfig;
 import org.elca.neosis.fragment.ConnectionErrorFragment;
 import org.elca.neosis.fragment.ProjectDetailFragment;
 import org.elca.neosis.fragment.ProjectListFragment;
+import org.elca.neosis.model.ListToDetailMessage;
 import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.component.View;
 import org.jacpfx.api.annotations.lifecycle.PostConstruct;
@@ -33,17 +33,16 @@ public class MainContentComponent implements FXComponent {
 
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
-        this.root = initProjectDetailFragment();
-//        if (!message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
-//            if (message.getMessageBody().equals(ProjectListFragment.ID)) {
-//                this.root = initProjectListFragment();
-//            } else if (message.getMessageBody().equals(ConnectionErrorFragment.ID)) {
-//                this.root = initConnectionErrorFragment();
-//            } else {
-//
-//            }
-//        }
-        return this.root;
+        if (!message.messageBodyEquals(FXUtil.MessageUtil.INIT)) {
+            if (message.getMessageBody().equals(ProjectListFragment.ID)) {
+                this.root = initProjectListFragment();
+            } else if (message.getMessageBody().equals(ConnectionErrorFragment.ID)) {
+                this.root = initConnectionErrorFragment();
+            } else {
+                this.root = initProjectDetailFragment();
+            }
+        }
+        return initProjectDetailFragment();
     }
 
     @Override
@@ -81,7 +80,7 @@ public class MainContentComponent implements FXComponent {
         VBox.setVgrow(container, Priority.ALWAYS);
         final ManagedFragmentHandler<ProjectDetailFragment> handler = context.getManagedFragmentHandler(ProjectDetailFragment.class);
         final ProjectDetailFragment controller = handler.getController();
-        controller.init();
+        controller.init(0);
         container.getChildren().addAll(handler.getFragmentNode());
         return container;
     }
