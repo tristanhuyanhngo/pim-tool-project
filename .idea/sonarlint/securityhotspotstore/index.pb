@@ -128,3 +128,7 @@ v
 Fbackend/src/main/java/org/elca/neosis/model/dto/CountConditionDTO.java,8\9\896a54c9522d58a56446048b575dd40b76bf5f0a
 u
 Efrontend/src/main/java/org/elca/neosis/model/ListToDetailMessage.java,8\9\897f1757ad8a6e1bbb57083fbfe04988f392b8ca
+h
+8frontend/src/main/java/org/elca/neosis/factory/I18N.java,9\4\94125745324d04af4dc2b9e901b11c94f312f723
+m
+=frontend/src/main/java/org/elca/neosis/multilingual/I18N.java,6\7\67abf9eb5e6858200043ad1e88cec789a67152ce

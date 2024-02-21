@@ -20,7 +20,8 @@
         <Label fx:id="labelProjectLists" styleClass="menu-projects-list-button" text="%MainPerspective.MenuComponent.label.projects">
          <VBox.margin>
             <Insets bottom="35.0" />
-         </VBox.margin></Label>
+         </VBox.margin>
+        </Label>
         <VBox>
             <Label fx:id="labelNew" styleClass="menu-create-title" text="%MainPerspective.MenuComponent.label.new">
             <VBox.margin>

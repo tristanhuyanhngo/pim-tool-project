@@ -11,13 +11,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import org.elca.neosis.common.ApplicationBundleKey;
 import org.elca.neosis.common.ui.NotificationAlert;
 import org.elca.neosis.component.MainContentComponent;
-import org.elca.neosis.factory.ObservableResourceFactory;
 import org.elca.neosis.grpc.Grpc;
 import org.elca.neosis.model.ListToDetailMessage;
 import org.elca.neosis.model.ProjectSearchResult;
 import org.elca.neosis.model.SearchConditionState;
+import org.elca.neosis.multilingual.I18N;
 import org.elca.neosis.proto.*;
 import org.elca.neosis.util.ApplicationMapper;
 import org.elca.neosis.common.ui.ConfirmationAlert;
@@ -27,15 +28,14 @@ import org.jacpfx.api.fragment.Scope;
 import org.jacpfx.rcp.context.Context;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static org.elca.neosis.util.ApplicationMapper.convertToProjectStatus;
 
 @Fragment(
         id = ProjectListFragment.ID,
         viewLocation = "/fxml/ProjectListFragment.fxml",
-        scope = Scope.PROTOTYPE,
-        resourceBundleLocation = ObservableResourceFactory.RESOURCE_BUNDLE_NAME
+        resourceBundleLocation = I18N.BUNDLE_NAME,
+        scope = Scope.PROTOTYPE
 )
 public class ProjectListFragment {
     public static final String ID = "ProjectListFragment";
@@ -123,6 +123,7 @@ public class ProjectListFragment {
         initResetButton();
         setInitialLayout();
         initPagination();
+        initMultilingual();
         getProjectsWithPagination(FIRST_PAGE_INDEX);
         initSearchBarListener();
         initProjectStatusListener();
@@ -223,7 +224,7 @@ public class ProjectListFragment {
                 setGraphic(null);
             } else {
                 ProjectSearchResult result = (ProjectSearchResult) getTableRow().getItem();
-                setGraphic(result != null && "New".equals(result.getStatus()) ? deleteButton : null);
+                setGraphic(result != null && ("New".equals(result.getStatus()) || "Nouveau".equals(result.getStatus())) ? deleteButton : null);
             }
         }
 
@@ -244,11 +245,12 @@ public class ProjectListFragment {
 
         private void handleDeleteButtonClick() {
             ProjectSearchResult project = getTableView().getItems().get(getIndex());
-            ConfirmationAlert confirmDialog = new ConfirmationAlert("Confirm Delete",
-                    "Are you sure ?",
-                    "Do you really want to delete the project \"" + project.getName() + "\" ? This process cannot be undone.",
-                    "Delete",
-                    "Cancel",
+            ConfirmationAlert confirmDialog = new ConfirmationAlert(
+                    I18N.get(ApplicationBundleKey.LABEL_TITLE_DELETE_ALERT),
+                    I18N.get(ApplicationBundleKey.LABEL_HEADER_DELETE_ALERT),
+                    I18N.get(ApplicationBundleKey.LABEL_CONTENT_DELETE_ALERT),
+                    I18N.get(ApplicationBundleKey.BUTTON_DELETE_DELETE_ALERT),
+                    I18N.get(ApplicationBundleKey.BUTTON_CANCEL_DELETE_ALERT),
                     "#ff0000",
                     "#cccccc",
                     Alert.AlertType.WARNING);
@@ -275,11 +277,12 @@ public class ProjectListFragment {
     }
 
     private void handleDeleteAllButtonClick() {
-        ConfirmationAlert confirmDialog = new ConfirmationAlert("Confirm Delete",
-                "Are you sure?",
-                "Do you really want to delete all projects?",
-                "Delete",
-                "Cancel",
+        ConfirmationAlert confirmDialog = new ConfirmationAlert(
+                I18N.get(ApplicationBundleKey.LABEL_TITLE_DELETE_ALL_ALERT),
+                I18N.get(ApplicationBundleKey.LABEL_HEADER_DELETE_ALERT),
+                I18N.get(ApplicationBundleKey.LABEL_CONTENT_DELETE_ALL_ALERT),
+                I18N.get(ApplicationBundleKey.BUTTON_DELETE_DELETE_ALERT),
+                I18N.get(ApplicationBundleKey.BUTTON_CANCEL_DELETE_ALERT),
                 "#ff0000",
                 "#cccccc",
                 Alert.AlertType.WARNING);
@@ -350,10 +353,43 @@ public class ProjectListFragment {
     }
 
     private void initProjectStatus() {
-        // Get the project status from file Proto
-        projectStatusCombobox.getItems().addAll("New", "Planned", "In progress", "Finished");
+        projectStatusCombobox.getItems().setAll(
+                I18N.get(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY),
+                I18N.get(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY),
+                I18N.get(ApplicationBundleKey.PROJECT_IN_PROGRESS_STATUS_KEY),
+                I18N.get(ApplicationBundleKey.PROJECT_FINISHED_STATUS_KEY)
+        );
         // Set the default project status
         projectStatusCombobox.setValue(currentSelectedStatusIndex == -1 ? null : projectStatusCombobox.getItems().get(currentSelectedStatusIndex));
+    }
+
+    private void initMultilingual() {
+        fragmentTitle.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_TITLE));
+        searchBar.promptTextProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_SEARCH_BAR_PLACEHOLDER));
+        projectStatusCombobox.promptTextProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_PROJECT_STATUS_COMBOBOX_PLACEHOLDER));
+        searchButton.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_SEARCH_PROJECT_BUTTON));
+        resetButton.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_RESET_SEARCH_BUTTON));
+        projectNumberColumn.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.TABLE_PROJECT_LIST_FRAGMENT_PROJECT_NUMBER_HEADER));
+        projectNameColumn.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.TABLE_PROJECT_LIST_FRAGMENT_PROJECT_NAME_HEADER));
+        projectStatusColumn.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.TABLE_PROJECT_LIST_FRAGMENT_PROJECT_STATUS_HEADER));
+        projectCustomerColumn.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.TABLE_PROJECT_LIST_FRAGMENT_PROJECT_CUSTOMER_HEADER));
+        projectStartDateColumn.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.TABLE_PROJECT_LIST_FRAGMENT_PROJECT_START_DATE_HEADER));
+        projectDeleteColumn.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.TABLE_PROJECT_LIST_FRAGMENT_DELETE_HEADER));
+        itemsSelectedText.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_ITEMS_SELECTED));
+        deleteSelectedItemsText.textProperty().bind(
+                I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_LIST_FRAGMENT_DELETE_SELECTED_ITEMS));
     }
 
     @FXML

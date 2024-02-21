@@ -2,19 +2,23 @@ package org.elca.neosis;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.elca.neosis.config.ApplicationConfig;
+import org.elca.neosis.config.JacpFXConfig;
 import org.elca.neosis.workbench.PIMToolWorkbench;
 import org.jacpfx.rcp.workbench.FXWorkbench;
 import org.jacpfx.spring.launcher.AFXSpringJavaConfigLauncher;
 
+import java.util.Objects;
+
 // The application – launcher is the main class of your application where you define the Spring context.
 // The leaf nodes are the “execution-target” (container) for all components associated (injected) to this perspective.
 public class PIMToolFrontendApplication extends AFXSpringJavaConfigLauncher {
+    private static final String APP_LOGO_PATH = "/images/logo_elca.png";
 
     @Override
     protected Class<?>[] getConfigClasses() {
-        return new Class<?>[]{ApplicationConfig.class}; // <?> - Wildcard | Unbounded wildcard
+        return new Class<?>[]{JacpFXConfig.class}; // <?> - Wildcard | Unbounded wildcard
         // returns an array with all valid spring configuration classes (annotated with @Configuration)
     }
 
@@ -40,5 +44,8 @@ public class PIMToolFrontendApplication extends AFXSpringJavaConfigLauncher {
     public void postInit(Stage stage) {
         // This method gives you access to the JavaFX stage. You may define a stylesheet for your application.
         Scene scene = stage.getScene();
+        stage.getIcons().add(new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream(APP_LOGO_PATH), "Missing ELCA Logo")));
+        stage.setTitle("PIM Tool");
     }
 }

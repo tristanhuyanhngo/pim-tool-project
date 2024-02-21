@@ -1,21 +1,17 @@
 package org.elca.neosis.fragment;
 
-import com.sun.javafx.css.converters.StringConverter;
 import io.grpc.StatusRuntimeException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.util.converter.CharacterStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 import org.elca.neosis.component.MainContentComponent;
-import org.elca.neosis.factory.ObservableResourceFactory;
 import org.elca.neosis.grpc.Grpc;
-import org.elca.neosis.model.ProjectSearchResult;
+import org.elca.neosis.multilingual.I18N;
 import org.elca.neosis.proto.*;
 import org.elca.neosis.util.ApplicationMapper;
 import org.jacpfx.api.annotations.Resource;
@@ -36,8 +32,8 @@ import static org.elca.neosis.util.ApplicationMapper.convertToProjectStatus;
 @Fragment(
         id = ProjectDetailFragment.ID,
         viewLocation = "/fxml/ProjectDetailFragment.fxml",
-        scope = Scope.PROTOTYPE,
-        resourceBundleLocation = ObservableResourceFactory.RESOURCE_BUNDLE_NAME
+        resourceBundleLocation = I18N.BUNDLE_NAME,
+        scope = Scope.PROTOTYPE
 )
 public class ProjectDetailFragment {
     public static final String ID = "ProjectDetailFragment";

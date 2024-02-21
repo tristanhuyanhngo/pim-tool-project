@@ -4,6 +4,7 @@ public class ApplicationBundleKey {
     public static final String EMPLOYEE_VISAS_NOT_EXISTED_MESSAGE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.employeeVisasNotExisted";
     public static final String LABEL_HELP_BUTTON = "MainPerspective.HeaderComponent.label.helpButton";
     public static final String LABEL_LOGOUT_BUTTON = "MainPerspective.HeaderComponent.label.logoutButton";
+    public static final String LABEL_APP_TITLE = "MainPerspective.HeaderComponent.label.appTitle";
     public static final String LABEL_VIEW_PROJECT_LIST = "MainPerspective.MenuComponent.label.projects";
     public static final String LABEL_NEW = "MainPerspective.MenuComponent.label.new";
     public static final String LABEL_CREATE_NEW_PROJECT = "MainPerspective.MenuComponent.label.newProject";
@@ -56,6 +57,27 @@ public class ApplicationBundleKey {
     public static final String PROJECT_PLANNED_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.pla";
     public static final String PROJECT_IN_PROGRESS_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.inp";
     public static final String PROJECT_FINISHED_STATUS_KEY = "MainPerspective.MainContentComponent.ProjectDetailFragment.status.fin";
-    public static final String BUTTON_OK_DIALOG_CONFIRM = "MainPerspective.MainContentComponent.DialogConfirm.button.ok";
-//    public static final String BUTTON_OK_DIALOG_CONFIRM = "MainPerspective.MainContentComponent.DialogConfirm.button.ok";
+
+    // Delete Alert
+    public static final String BUTTON_DELETE_DELETE_ALERT = "MainPerspective.MainContentComponent.DeleteAlert.button.delete";
+    public static final String BUTTON_CANCEL_DELETE_ALERT = "MainPerspective.MainContentComponent.DeleteAlert.button.cancel";
+    public static final String LABEL_TITLE_DELETE_ALERT = "MainPerspective.MainContentComponent.DeleteAlert.label.title";
+    public static final String LABEL_HEADER_DELETE_ALERT = "MainPerspective.MainContentComponent.DeleteAlert.label.header";
+    public static final String LABEL_CONTENT_DELETE_ALERT = "MainPerspective.MainContentComponent.DeleteAlert.label.content";
+    public static final String LABEL_CONTENT_DELETE_ALL_ALERT = "MainPerspective.MainContentComponent.DeleteAllAlert.label.content";
+    public static final String LABEL_TITLE_DELETE_ALL_ALERT = "MainPerspective.MainContentComponent.DeleteAllAlert.label.title";
+
+    // Create Alert
+    public static final String BUTTON_CREATE_CREATE_ALERT = "MainPerspective.MainContentComponent.CreateAlert.button.create";
+    public static final String BUTTON_CANCEL_CREATE_ALERT = "MainPerspective.MainContentComponent.CreateAlert.button.cancel";
+    public static final String LABEL_TITLE_CREATE_ALERT = "MainPerspective.MainContentComponent.CreateAlert.label.title";
+    public static final String LABEL_HEADER_CREATE_ALERT = "MainPerspective.MainContentComponent.CreateAlert.label.header";
+    public static final String LABEL_CONTENT_CREATE_ALERT = "MainPerspective.MainContentComponent.CreateAlert.label.content";
+
+    // Update Alert
+    public static final String BUTTON_UPDATE_UPDATE_ALERT = "MainPerspective.MainContentComponent.UpdateAlert.button.update";
+    public static final String BUTTON_CANCEL_UPDATE_ALERT = "MainPerspective.MainContentComponent.UpdateAlert.button.cancel";
+    public static final String LABEL_TITLE_UPDATE_ALERT = "MainPerspective.MainContentComponent.UpdateAlert.label.title";
+    public static final String LABEL_HEADER_UPDATE_ALERT = "MainPerspective.MainContentComponent.UpdateAlert.label.header";
+    public static final String LABEL_CONTENT_UPDATE_ALERT = "MainPerspective.MainContentComponent.UpdateAlert.label.content";
 }

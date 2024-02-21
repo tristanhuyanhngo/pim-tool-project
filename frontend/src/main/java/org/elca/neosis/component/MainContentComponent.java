@@ -9,6 +9,7 @@ import org.elca.neosis.fragment.ConnectionErrorFragment;
 import org.elca.neosis.fragment.ProjectDetailFragment;
 import org.elca.neosis.fragment.ProjectListFragment;
 import org.elca.neosis.model.ListToDetailMessage;
+import org.elca.neosis.multilingual.I18N;
 import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.component.View;
 import org.jacpfx.api.annotations.lifecycle.PostConstruct;
@@ -21,6 +22,7 @@ import org.jacpfx.rcp.util.FXUtil;
 @View(
         name = MainContentComponent.ID,
         id = MainContentComponent.ID,
+        resourceBundleLocation = I18N.BUNDLE_NAME,
         initialTargetLayoutId = JacpFXConfig.MAIN_CONTENT_CONTAINER
 )
 public class MainContentComponent implements FXComponent {

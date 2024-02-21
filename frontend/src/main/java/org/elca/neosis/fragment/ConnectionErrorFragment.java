@@ -2,15 +2,15 @@ package org.elca.neosis.fragment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import org.elca.neosis.factory.ObservableResourceFactory;
+import org.elca.neosis.multilingual.I18N;
 import org.jacpfx.api.annotations.fragment.Fragment;
 import org.jacpfx.api.fragment.Scope;
 
 @Fragment(
         id = ConnectionErrorFragment.ID,
-        viewLocation = "",
-        scope = Scope.PROTOTYPE,
-        resourceBundleLocation = ObservableResourceFactory.RESOURCE_BUNDLE_NAME
+        viewLocation = "fxml/ConnectionErrorFragment.fxml",
+        resourceBundleLocation = I18N.BUNDLE_NAME,
+        scope = Scope.PROTOTYPE
 )
 public class ConnectionErrorFragment {
     public static final String ID = "ConnectionErrorFragment";
