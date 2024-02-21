@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.converter.LocalDateStringConverter;
 import org.elca.neosis.common.ApplicationBundleKey;
 import org.elca.neosis.common.ui.ConfirmationAlert;
+import org.elca.neosis.common.ui.NotificationAlert;
 import org.elca.neosis.component.MainContentComponent;
 import org.elca.neosis.grpc.Grpc;
 import org.elca.neosis.multilingual.I18N;
@@ -454,6 +455,11 @@ public class ProjectDetailFragment {
                     invalidVisas.setText(formattedResult);
                     break;
                 case CAN_NOT_UPDATE_PROJECT:
+                    NotificationAlert notificationAlert= new NotificationAlert(
+                            I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_TITLE),
+                            I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_HEADER),
+                            I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_CONTENT));
+                    notificationAlert.showConfirmationDialog();
                     break;
                 default:
                     context.send(MainContentComponent.ID, ProjectListFragment.ID);
