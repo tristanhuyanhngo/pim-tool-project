@@ -13,76 +13,99 @@
       xmlns="http://javafx.com/javafx/17.0.2-ea"
       xmlns:fx="http://javafx.com/fxml/1">
     <padding>
-        <Insets left="30" top="25" />
+        <Insets left="30" top="25"/>
     </padding>
-    <Label fx:id="fragmentTitle" styleClass="project-detail-fragment-title" text="%MainPerspective.MainContentComponent.ProjectListFragment.label.fragmentTitle" />
-    <Separator maxWidth="1334" />
+    <Label fx:id="fragmentTitle" styleClass="project-detail-fragment-title"
+           text="%MainPerspective.MainContentComponent.ProjectListFragment.label.fragmentTitle"/>
+    <Separator maxWidth="1334"/>
     <VBox spacing="30">
         <HBox spacing="30">
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <TextField fx:id="searchBar" prefHeight="30" prefWidth="400" promptText="%MainPerspective.MainContentComponent.ProjectListFragment.label.searchBarPlaceholder" />
-                <ComboBox fx:id="projectStatusCombobox" prefHeight="30" prefWidth="250" promptText="%MainPerspective.MainContentComponent.ProjectListFragment.label.projectStatusComboBoxPlaceholder" styleClass="project-detail-fragment-dropdown">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin></ComboBox>
+                <TextField fx:id="searchBar" prefHeight="30" prefWidth="400"
+                           promptText="%MainPerspective.MainContentComponent.ProjectListFragment.label.searchBarPlaceholder"/>
+                <ComboBox fx:id="projectStatusCombobox" prefHeight="30" prefWidth="250"
+                          promptText="%MainPerspective.MainContentComponent.ProjectListFragment.label.projectStatusComboBoxPlaceholder"
+                          styleClass="project-detail-fragment-dropdown">
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </ComboBox>
             </HBox>
             <HBox alignment="CENTER_LEFT" spacing="50">
-                <Button fx:id="searchButton" onAction="#handleSearchButtonClick" prefHeight="35" prefWidth="250" styleClass="project-detail-fragment-button, project-detail-fragment-submit-button" text="%MainPerspective.MainContentComponent.ProjectListFragment.label.searchProjectButtonLabel">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin></Button>
-                <Label fx:id="resetButton" styleClass="project-list-fragment-reset-button" text="%MainPerspective.MainContentComponent.ProjectListFragment.label.resetSearchButtonLabel" />
+                <Button fx:id="searchButton" onAction="#handleSearchButtonClick" prefHeight="35" prefWidth="250"
+                        styleClass="project-detail-fragment-button, project-detail-fragment-submit-button"
+                        text="%MainPerspective.MainContentComponent.ProjectListFragment.label.searchProjectButtonLabel">
+                    <HBox.margin>
+                        <Insets left="25.0"/>
+                    </HBox.margin>
+                </Button>
+                <Label fx:id="resetButton" styleClass="project-list-fragment-reset-button"
+                       text="%MainPerspective.MainContentComponent.ProjectListFragment.label.resetSearchButtonLabel"/>
             </HBox>
         </HBox>
         <VBox>
-            <TableView fx:id="projectTableView" styleClass="table-view" maxWidth="1334" minHeight="530" prefHeight="550">
+            <TableView fx:id="projectTableView" styleClass="table-view" maxWidth="1334" minHeight="530"
+                       prefHeight="550">
                 <columns>
-                    <TableColumn fx:id="projectNumberColumn" prefWidth="100" resizable="false" styleClass="table-cell-right" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.numberHeader">
+                    <TableColumn fx:id="projectNumberColumn" prefWidth="100" resizable="false"
+                                 styleClass="table-cell-right"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.numberHeader">
                         <cellValueFactory>
-                            <PropertyValueFactory property="number" />
+                            <PropertyValueFactory property="number"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectNameColumn" prefWidth="500" resizable="false" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.nameHeader">
+                    <TableColumn fx:id="projectNameColumn" prefWidth="500" resizable="false"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.nameHeader">
                         <cellValueFactory>
-                            <PropertyValueFactory property="name" />
+                            <PropertyValueFactory property="name"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectStatusColumn" prefWidth="150" resizable="false" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.statusHeader">
+                    <TableColumn fx:id="projectStatusColumn" prefWidth="150" resizable="false"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.statusHeader">
                         <cellValueFactory>
-                            <PropertyValueFactory property="status" />
+                            <PropertyValueFactory property="status"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectCustomerColumn" prefWidth="250" resizable="false" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.customerHeader">
+                    <TableColumn fx:id="projectCustomerColumn" prefWidth="250" resizable="false"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.customerHeader">
                         <cellValueFactory>
-                            <PropertyValueFactory property="customer" />
+                            <PropertyValueFactory property="customer"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectStartDateColumn" prefWidth="151" resizable="false" styleClass="table-cell-center" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.startDateHeader">
+                    <TableColumn fx:id="projectStartDateColumn" prefWidth="151" resizable="false"
+                                 styleClass="table-cell-center"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.startDateHeader">
                         <cellValueFactory>
-                            <PropertyValueFactory property="startDate" />
+                            <PropertyValueFactory property="startDate"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="projectDeleteColumn" prefWidth="113" resizable="false" styleClass="table-cell-center" text="%MainPerspective.MainContentComponent.ProjectListFragment.table.deleteHeader" />
+                    <TableColumn fx:id="projectDeleteColumn" prefWidth="113" resizable="false"
+                                 styleClass="table-cell-center"
+                                 text="%MainPerspective.MainContentComponent.ProjectListFragment.table.deleteHeader"/>
                 </columns>
             </TableView>
-            <HBox fx:id="selectedItemsContainer" alignment="CENTER_LEFT" maxWidth="1334" styleClass="project-list-fragment-selected-items-container" visible="false">
+            <HBox fx:id="selectedItemsContainer" alignment="CENTER_LEFT" maxWidth="1334"
+                  styleClass="project-list-fragment-selected-items-container" visible="false">
                 <padding>
-                    <Insets topRightBottomLeft="10" />
+                    <Insets topRightBottomLeft="10"/>
                 </padding>
-                <Label fx:id="numberOfSelectedItems" styleClass="project-list-fragment-primary-text" />
-                <Label fx:id="itemsSelectedText" styleClass="project-list-fragment-primary-text" text="%MainPerspective.MainContentComponent.ProjectListFragment.label.itemsSelected" />
-                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="numberOfSelectedItems" styleClass="project-list-fragment-primary-text"/>
+                <Label fx:id="itemsSelectedText" styleClass="project-list-fragment-primary-text"
+                       text="%MainPerspective.MainContentComponent.ProjectListFragment.label.itemsSelected"/>
+                <Region HBox.hgrow="ALWAYS"/>
                 <HBox alignment="CENTER_LEFT" spacing="5">
-                    <Label fx:id="deleteSelectedItemsText" styleClass="project-list-fragment-danger-text" text="%MainPerspective.MainContentComponent.ProjectListFragment.label.deleteSelectedItems" />
-                    <ImageView fx:id="deleteAllButton" preserveRatio="true" styleClass="project-list-fragment-delete-button">
-                        <Image url="@../images/delete-button.png" />
+                    <Label fx:id="deleteSelectedItemsText" styleClass="project-list-fragment-danger-text"
+                           text="%MainPerspective.MainContentComponent.ProjectListFragment.label.deleteSelectedItems"/>
+                    <ImageView fx:id="deleteAllButton" preserveRatio="true"
+                               styleClass="project-list-fragment-delete-button">
+                        <Image url="@../images/delete-button.png"/>
                     </ImageView>
                 </HBox>
             </HBox>
         </VBox>
         <HBox fx:id="paginationContainer" alignment="CENTER_RIGHT">
             <padding>
-                <Insets right="265" />
+                <Insets right="265"/>
             </padding>
         </HBox>
     </VBox>

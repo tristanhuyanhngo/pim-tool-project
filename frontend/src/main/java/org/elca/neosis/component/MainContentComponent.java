@@ -41,7 +41,12 @@ public class MainContentComponent implements FXComponent {
             } else if (message.getMessageBody().equals(ConnectionErrorFragment.ID)) {
                 this.root = initConnectionErrorFragment();
             } else {
-                this.root = initProjectDetailFragment((ListToDetailMessage) message.getMessageBody());
+                Object messageBody = message.getMessageBody();
+                if (messageBody instanceof String) {
+                    this.root = initProjectDetailFragment(null);
+                } else {
+                    this.root = initProjectDetailFragment((ListToDetailMessage) message.getMessageBody());
+                }
             }
         }
         return this.root;
@@ -82,7 +87,7 @@ public class MainContentComponent implements FXComponent {
         VBox.setVgrow(container, Priority.ALWAYS);
         final ManagedFragmentHandler<ProjectDetailFragment> handler = context.getManagedFragmentHandler(ProjectDetailFragment.class);
         final ProjectDetailFragment controller = handler.getController();
-        controller.init(messageBody.getProjectNumber());
+        controller.init(messageBody == null ? null : messageBody.getProjectNumber());
         container.getChildren().addAll(handler.getFragmentNode());
         return container;
     }

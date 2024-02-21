@@ -1,7 +1,6 @@
 package org.elca.neosis.common;
 
 public class ApplicationBundleKey {
-    public static final String EMPLOYEE_VISAS_NOT_EXISTED_MESSAGE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.employeeVisasNotExisted";
     public static final String LABEL_HELP_BUTTON = "MainPerspective.HeaderComponent.label.helpButton";
     public static final String LABEL_LOGOUT_BUTTON = "MainPerspective.HeaderComponent.label.logoutButton";
     public static final String LABEL_APP_TITLE = "MainPerspective.HeaderComponent.label.appTitle";
@@ -24,12 +23,9 @@ public class ApplicationBundleKey {
     public static final String LABEL_PROJECT_DETAIL_FRAGMENT_CREATE_BUTTON = "MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCreateProjectButtonLabel";
     public static final String LABEL_PROJECT_DETAIL_FRAGMENT_EDIT_BUTTON = "MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentEditProjectButtonLabel";
     public static final String LABEL_PROJECT_DETAIL_FRAGMENT_MISSING_REQUIRED_FIELDS = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.missingRequiredFields";
-    public static final String LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_NUMBER_OUT_OF_RANGE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectNumberOutOfRange";
     public static final String LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_NUMBER_EXISTED = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectNumberExisted";
-    public static final String LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_START_DATE_GREATER_THAN_END_DATE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectStartDateGreaterThanEndDate";
-    public static final String LABEL_PROJECT_NAME_OUT_OF_RANGE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectNameOutOfRange";
-    public static final String LABEL_PROJECT_CUSTOMER_OUT_OF_RANGE = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectCustomerOutOfRange";
-    public static final String LABEL_CONNECTION_ERROR_FRAGMENT_UNEXPECTED_ERROR_OCCURRED = "MainPerspective.MainContentComponent.ConnectionErrorFragment.label.unexpectedErrorOccur";
+    public static final String LABEL_PROJECT_DETAIL_FRAGMENT_EMPLOYEE_VISAS_NOT_EXISTED = "MainPerspective.MainContentComponent.ProjectDetailFragment.exception.employeeVisasNotExisted";
+    public static final String LABEL_CONNECTION_ERROR_FRAGMENT_UNEXPECTED_ERROR_OCCURRED = "MainPerspective.MainContentComponent.ConnectionErrorFragment.label.unexpectedError";
     public static final String LABEL_CONNECTION_ERROR_FRAGMENT_PLEASE = "MainPerspective.MainContentComponent.ConnectionErrorFragment.label.please";
     public static final String LABEL_CONNECTION_ERROR_FRAGMENT_CONTACT_YOUR_ADMIN = "MainPerspective.MainContentComponent.ConnectionErrorFragment.label.contactYourAdmin";
     public static final String LABEL_CONNECTION_ERROR_FRAGMENT_OR = "MainPerspective.MainContentComponent.ConnectionErrorFragment.label.or";

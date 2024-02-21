@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.LocalDateStringConverter;
+import org.elca.neosis.common.ApplicationBundleKey;
 import org.elca.neosis.component.MainContentComponent;
 import org.elca.neosis.grpc.Grpc;
 import org.elca.neosis.multilingual.I18N;
@@ -22,12 +23,12 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.chrono.Chronology;
+import java.time.chrono.MinguoChronology;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-
-import static org.elca.neosis.util.ApplicationMapper.convertToProjectStatus;
 
 @Fragment(
         id = ProjectDetailFragment.ID,
@@ -51,16 +52,18 @@ public class ProjectDetailFragment {
     private Button cancelButton;
 
     @FXML
-    private Label closeButton;
-
-    @FXML
     private HBox errorContainer;
 
     @FXML
     private TextField projectNumberInput;
 
     @FXML
+    private Label fragmentProjectNumberInputLabel;
+
+    @FXML
     private TextField projectNameInput;
+    @FXML
+    private Label fragmentProjectNameInputLabel;
 
     @FXML
     private TextField customerInput;
@@ -81,14 +84,78 @@ public class ProjectDetailFragment {
     private DatePicker endDateInput;
 
     @FXML
-    private Label projectVisaNotValid;
+    private Label projectVisaNotValidMessage;
     @FXML
     private Label projectNumberExistedMessage;
     @FXML
-    private Label invalidVisasMessage;
+    private Label missingRequiredFieldsMessage;
+    @FXML
+    private Label invalidVisas;
     @FXML
     private Label closeButtonErrorContainer;
+
     @FXML
+    private Label fragmentCustomerInputLabel;
+
+    @FXML
+    private Label fragmentGroupInputLabel;
+
+    @FXML
+    private Label fragmentMembersInputLabel;
+
+    @FXML
+    private Label fragmentStatusInputLabel;
+
+    @FXML
+    private Label fragmentStartDateInputLabel;
+
+    @FXML
+    private Label fragmentEndDateInputLabel;
+
+    @FXML
+    private Label fragmentTitle;
+
+
+    private void initMultilingual() {
+        // Init multilingual for labels
+        fragmentProjectNumberInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_NUMBER_INPUT_TITLE));
+        fragmentProjectNameInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_NAME_INPUT));
+        fragmentCustomerInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_CUSTOMER_INPUT));
+        fragmentGroupInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_GROUP_INPUT));
+        fragmentMembersInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_MEMBERS_INPUT));
+        fragmentStatusInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_STATUS_INPUT));
+        fragmentStartDateInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_START_DATE_INPUT));
+        fragmentEndDateInputLabel.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_END_DATE_INPUT));
+        projectVisaNotValidMessage.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_EMPLOYEE_VISAS_NOT_EXISTED));
+        missingRequiredFieldsMessage.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_MISSING_REQUIRED_FIELDS));
+        projectNumberExistedMessage.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_NUMBER_EXISTED));
+
+        // Init multilingual for buttons
+
+        cancelButton.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_CANCEL_BUTTON));
+
+        // Init multilingual for datepicker
+        I18N.localeProperty().addListener((observable, oldValue, newValue) -> {
+            startDateInput.setChronology(MinguoChronology.INSTANCE);
+            startDateInput.setChronology(Chronology.ofLocale(newValue));
+
+            endDateInput.setChronology(MinguoChronology.INSTANCE);
+            endDateInput.setChronology(Chronology.ofLocale(newValue));
+        });
+    }
+
+    private void initMultilingualCreateProject() {
+        initMultilingual();
+        submitButton.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_CREATE_BUTTON));
+        fragmentTitle.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_CREATE_TITLE));
+    }
+
+    private void initMultilingualEditProject() {
+        initMultilingual();
+        submitButton.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_EDIT_BUTTON));
+        fragmentTitle.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_EDIT_TITLE));
+    }
+
     public void handleCreateProject() {
         hideErrorMessage();
         removeErrorClassFromTextFields();
@@ -123,7 +190,7 @@ public class ProjectDetailFragment {
         }
     }
 
-    public void editProject(Project project) {
+    public void handleEditProject(Project project) {
         hideErrorMessage();
         removeErrorClassFromTextFields();
         List<Node> requiredEmptyTextFields = getEmptyRequiredInputFields();
@@ -171,6 +238,7 @@ public class ProjectDetailFragment {
         initGroupComboboxInput();
         initStatusProject();
         // Init handling
+        bindNodeVisible();
         closeButtonErrorContainer.setOnMouseClicked(event -> errorContainer.setVisible(false));
         cancelButton.setOnAction(event -> context.send(MainContentComponent.ID, ProjectListFragment.ID));
         initRequiredTextFieldChangeListener(projectNameInput, projectNameInput);
@@ -178,9 +246,12 @@ public class ProjectDetailFragment {
         initRequiredTextFieldChangeListener(startDateInput.getEditor(), startDateInput);
         if (Objects.isNull(projectNumber)) {
             initRequiredTextFieldChangeListener(projectNumberInput, projectNumberInput);
+            initMultilingualCreateProject();
+            submitButton.setOnAction(event -> handleCreateProject());
         } else {
             Project project = initLayout(projectNumber);
-            submitButton.setOnAction(event -> editProject(project));
+            initMultilingualEditProject();
+            submitButton.setOnAction(event -> handleEditProject(project));
         }
         statusInput.valueProperty().addListener(((observable, oldValue, newValue) ->
                 currentSelectedStatusIndex = statusInput.getSelectionModel().getSelectedIndex()));
@@ -321,15 +392,15 @@ public class ProjectDetailFragment {
     private void bindNodeVisible() {
         errorContainer.managedProperty().bind(errorContainer.visibleProperty());
         projectNumberExistedMessage.managedProperty().bind(projectNumberExistedMessage.visibleProperty());
-        projectVisaNotValid.managedProperty().bind(projectVisaNotValid.visibleProperty());
-        invalidVisasMessage.managedProperty().bind(invalidVisasMessage.visibleProperty());
+        projectVisaNotValidMessage.managedProperty().bind(projectVisaNotValidMessage.visibleProperty());
+        invalidVisas.managedProperty().bind(invalidVisas.visibleProperty());
     }
 
     private void hideErrorMessage() {
         errorContainer.setVisible(false);
         projectNumberExistedMessage.setVisible(false);
-        projectVisaNotValid.setVisible(false);
-        invalidVisasMessage.setVisible(false);
+        projectVisaNotValidMessage.setVisible(false);
+        invalidVisas.setVisible(false);
     }
 
     private boolean isValidInteger(String text) {
@@ -350,11 +421,11 @@ public class ProjectDetailFragment {
                     break;
                 case EMPLOYEE_VISAS_NOT_EXISTED:
                     membersInput.getStyleClass().add(FIELD_ERROR_CSS_CLASS);
-                    projectVisaNotValid.setVisible(true);
-                    invalidVisasMessage.setVisible(true);
+                    projectVisaNotValidMessage.setVisible(true);
+                    invalidVisas.setVisible(true);
                     List<String> invalidVisasList = response.getInvalidVisaList();
                     String formattedResult = " {" + String.join(",", invalidVisasList) + "}";
-                    invalidVisasMessage.setText(formattedResult);
+                    invalidVisas.setText(formattedResult);
                     break;
                 case CAN_NOT_UPDATE_PROJECT:
                     break;
@@ -392,6 +463,7 @@ public class ProjectDetailFragment {
             }
         }));
     }
+
 
     private void removeErrorClassFromTextFields() {
         projectNumberInput.getStyleClass().remove(FIELD_ERROR_CSS_CLASS);

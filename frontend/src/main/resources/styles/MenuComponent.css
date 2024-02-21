@@ -10,11 +10,13 @@
 }
 
 .menu-create-button {
+    -fx-cursor: hand;
     -fx-font-size: 14px;
     -fx-text-fill: #666666;
 }
 
 .menu-create-button-active {
+    -fx-cursor: hand;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
 }

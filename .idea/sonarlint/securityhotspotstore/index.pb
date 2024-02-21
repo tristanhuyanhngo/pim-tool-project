@@ -36,8 +36,6 @@ N
 frontend/pim-tool-frontend.iml,6\1\618ad72432e13c574bbfc6dc0d057164fdf3b8b5
 @
 frontend/pom.xml,d\6\d6193ec3edfd8c416bb7a1164257c50166469ff6
-t
-Dfrontend/src/main/java/org/elca/neosis/config/ApplicationConfig.java,c\7\c72f0ea4549317e3ea779d548784934726fe0215
 Q
 !common/src/main/proto/group.proto,6\e\6e8b82ecca5f076efa9943d8229e1d5863e5c416
 S
@@ -96,8 +94,6 @@ s
 Cbackend/src/main/java/org/elca/neosis/service/GroupServiceImpl.java,7\a\7a96bb134a69d578fec19f55beb1cd14b82fa97f
 l
 <backend/src/main/java/org/elca/neosis/ApplicationConfig.java,d\d\ddb20f9fe5fbe6bacdfd049438665d51acaf69ba
-}
-Mfrontend/src/main/java/org/elca/neosis/factory/ObservableResourceFactory.java,e\f\efb18c546138d0965d3c5e6baa2a7d8cfabb73c5
 s
 Cfrontend/src/main/java/org/elca/neosis/component/MenuComponent.java,9\e\9ea713119a3218c48bdf0b5ca5347cabb04268da
 u
@@ -128,7 +124,7 @@ v
 Fbackend/src/main/java/org/elca/neosis/model/dto/CountConditionDTO.java,8\9\896a54c9522d58a56446048b575dd40b76bf5f0a
 u
 Efrontend/src/main/java/org/elca/neosis/model/ListToDetailMessage.java,8\9\897f1757ad8a6e1bbb57083fbfe04988f392b8ca
-h
-8frontend/src/main/java/org/elca/neosis/factory/I18N.java,9\4\94125745324d04af4dc2b9e901b11c94f312f723
 m
 =frontend/src/main/java/org/elca/neosis/multilingual/I18N.java,6\7\67abf9eb5e6858200043ad1e88cec789a67152ce
+k
+;frontend/src/main/resources/fxml/ProjectDetailFragment.fxml,9\e\9ee05fc0691953ea4925f16464e5c892bb56b2d8

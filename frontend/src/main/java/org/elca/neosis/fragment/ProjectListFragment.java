@@ -28,7 +28,6 @@ import org.jacpfx.api.fragment.Scope;
 import org.jacpfx.rcp.context.Context;
 
 import java.util.*;
-
 import static org.elca.neosis.util.ApplicationMapper.convertToProjectStatus;
 
 @Fragment(
@@ -494,9 +493,9 @@ public class ProjectListFragment {
                     .build());
             if (!response.getIsSuccess()) {
                 NotificationAlert notificationAlert= new NotificationAlert(
-                        "Error dialog",
-                        "This is an error dialog",
-                        "There was a new update about this project. Please try again later");
+                        I18N.get(ApplicationBundleKey.LABEL_ERROR_DELETING_DIALOG_TITLE),
+                        I18N.get(ApplicationBundleKey.LABEL_ERROR_DELETING_DIALOG_HEADER),
+                        I18N.get(ApplicationBundleKey.LABEL_ERROR_DELETING_DIALOG_CONTENT));
                 notificationAlert.showConfirmationDialog();
             }
         } catch (StatusRuntimeException e) {

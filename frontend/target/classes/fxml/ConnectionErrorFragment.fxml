@@ -21,8 +21,8 @@
         </ImageView>
         <VBox styleClass="connection-error-fragment-container" spacing="30" alignment="CENTER_LEFT">
             <VBox spacing="15">
-                <Label fx:id="unexpectedErrorOccur" styleClass="connection-error-fragment-main-color"
-                       text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.unexpectedErrorOccur"/>
+                <Label fx:id="unexpectedError" styleClass="connection-error-fragment-main-color"
+                       text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.unexpectedError"/>
                 <HBox>
                     <Label fx:id="please" styleClass="connection-error-fragment-main-color"
                            text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.please"/>
