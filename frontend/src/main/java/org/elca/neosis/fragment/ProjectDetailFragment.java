@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.LocalDateStringConverter;
 import org.elca.neosis.common.ApplicationBundleKey;
+import org.elca.neosis.common.ui.ConfirmationAlert;
 import org.elca.neosis.component.MainContentComponent;
 import org.elca.neosis.grpc.Grpc;
 import org.elca.neosis.multilingual.I18N;
@@ -156,7 +157,7 @@ public class ProjectDetailFragment {
         fragmentTitle.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_EDIT_TITLE));
     }
 
-    public void handleCreateProject() {
+    private void handleCreateProject() {
         hideErrorMessage();
         removeErrorClassFromTextFields();
         List<Node> requiredEmptyTextFields = getEmptyRequiredInputFields();
@@ -165,32 +166,44 @@ public class ProjectDetailFragment {
             requiredEmptyTextFields.forEach(textField ->
                     textField.getStyleClass().add(FIELD_ERROR_CSS_CLASS));
         } else {
-            LocalDate endDate = endDateInput.getValue();
-            Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL))
-                    .map(String::trim)
-                    .collect(Collectors.toSet());
-            NewProject request = NewProject.newBuilder()
-                    .setNumber(Integer.parseInt(projectNumberInput.getText()))
-                    .setName(projectNameInput.getText())
-                    .setCustomer(customerInput.getText())
-                    .setGroupId(groupInput.getValue())
-                    .setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue()))
-                    .addAllMembers(members)
-                    .setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
-                    .setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "")
-                    .build();
-            try {
-                Grpc client = Grpc.getInstance();
-                ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
-                CreateUpdateProjectResponse response = stub.createProject(request);
-                handleProjectResponse(response);
-            } catch (StatusRuntimeException e) {
-                context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);
+            ConfirmationAlert confirmDialog = new ConfirmationAlert(
+                    I18N.get(ApplicationBundleKey.LABEL_TITLE_CREATE_ALERT),
+                    I18N.get(ApplicationBundleKey.LABEL_HEADER_CREATE_ALERT),
+                    I18N.get(ApplicationBundleKey.LABEL_CONTENT_CREATE_ALERT),
+                    I18N.get(ApplicationBundleKey.BUTTON_CREATE_CREATE_ALERT),
+                    I18N.get(ApplicationBundleKey.BUTTON_CANCEL_CREATE_ALERT),
+                    "#2F85FA",
+                    "#cccccc",
+                    Alert.AlertType.CONFIRMATION);
+            boolean confirmed = confirmDialog.showConfirmationDialog();
+
+            if (confirmed) {
+                LocalDate endDate = endDateInput.getValue();
+                Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL))
+                        .map(String::trim)
+                        .collect(Collectors.toSet());
+                NewProject request = NewProject.newBuilder()
+                        .setNumber(Integer.parseInt(projectNumberInput.getText()))
+                        .setName(projectNameInput.getText())
+                        .setCustomer(customerInput.getText())
+                        .setGroupId(groupInput.getValue())
+                        .setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue()))
+                        .addAllMembers(members)
+                        .setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
+                        .setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "")
+                        .build();
+                try {
+                    Grpc client = Grpc.getInstance();
+                    ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
+                    CreateUpdateProjectResponse response = stub.createProject(request);
+                    handleProjectResponse(response);
+                } catch (StatusRuntimeException e) {
+                    context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);
+                }
             }
         }
     }
-
-    public void handleEditProject(Project project) {
+    private void handleEditProject(Project project) {
         hideErrorMessage();
         removeErrorClassFromTextFields();
         List<Node> requiredEmptyTextFields = getEmptyRequiredInputFields();
@@ -199,29 +212,42 @@ public class ProjectDetailFragment {
             requiredEmptyTextFields.forEach(textField ->
                     textField.getStyleClass().add(FIELD_ERROR_CSS_CLASS));
         } else {
-            LocalDate endDate = endDateInput.getValue();
-            Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL))
-                    .map(String::trim)
-                    .collect(Collectors.toSet());
-            Project request = Project.newBuilder()
-                    .setId(project.getId())
-                    .setVersion(project.getVersion())
-                    .setNumber(Integer.parseInt(projectNumberInput.getText()))
-                    .setName(projectNameInput.getText())
-                    .setCustomer(customerInput.getText())
-                    .setGroupId(groupInput.getValue())
-                    .setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue()))
-                    .addAllMembers(members)
-                    .setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
-                    .setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "")
-                    .build();
-            try {
-                Grpc client = Grpc.getInstance();
-                ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
-                CreateUpdateProjectResponse response = stub.updateProject(request);
-                handleProjectResponse(response);
-            } catch (StatusRuntimeException e) {
-                context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);
+            ConfirmationAlert confirmDialog = new ConfirmationAlert(
+                    I18N.get(ApplicationBundleKey.LABEL_TITLE_UPDATE_ALERT),
+                    I18N.get(ApplicationBundleKey.LABEL_HEADER_UPDATE_ALERT),
+                    I18N.get(ApplicationBundleKey.LABEL_CONTENT_UPDATE_ALERT),
+                    I18N.get(ApplicationBundleKey.BUTTON_UPDATE_UPDATE_ALERT),
+                    I18N.get(ApplicationBundleKey.BUTTON_CANCEL_UPDATE_ALERT),
+                    "#2F85FA",
+                    "#cccccc",
+                    Alert.AlertType.CONFIRMATION);
+            boolean confirmed = confirmDialog.showConfirmationDialog();
+
+            if (confirmed) {
+                LocalDate endDate = endDateInput.getValue();
+                Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL))
+                        .map(String::trim)
+                        .collect(Collectors.toSet());
+                Project request = Project.newBuilder()
+                        .setId(project.getId())
+                        .setVersion(project.getVersion())
+                        .setNumber(Integer.parseInt(projectNumberInput.getText()))
+                        .setName(projectNameInput.getText())
+                        .setCustomer(customerInput.getText())
+                        .setGroupId(groupInput.getValue())
+                        .setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue()))
+                        .addAllMembers(members)
+                        .setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
+                        .setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "")
+                        .build();
+                try {
+                    Grpc client = Grpc.getInstance();
+                    ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
+                    CreateUpdateProjectResponse response = stub.updateProject(request);
+                    handleProjectResponse(response);
+                } catch (StatusRuntimeException e) {
+                    context.send(MainContentComponent.ID, ConnectionErrorFragment.ID);
+                }
             }
         }
     }
