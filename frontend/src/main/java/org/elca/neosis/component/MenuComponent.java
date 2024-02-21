@@ -47,6 +47,7 @@ public class MenuComponent implements FXComponent {
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
         initMultilingual();
+        labelNewProject.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));
         return null;
     }
 
@@ -62,7 +63,5 @@ public class MenuComponent implements FXComponent {
         labelNewCustomer.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_CREATE_NEW_CUSTOMER));
         labelNewSupplier.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_CREATE_NEW_SUPPLIER));
         labelProjectLists.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectListFragment.ID));
-        labelNew.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));
-        labelNewProject.setOnMouseClicked(event -> context.send(MainContentComponent.ID, ProjectDetailFragment.ID));
     }
 }

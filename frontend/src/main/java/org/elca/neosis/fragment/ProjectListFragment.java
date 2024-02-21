@@ -38,12 +38,10 @@ import static org.elca.neosis.util.ApplicationMapper.convertToProjectStatus;
 )
 public class ProjectListFragment {
     public static final String ID = "ProjectListFragment";
-    public static final int CHECKBOX_SIZE = 15;
     public static final int COLUMN_WIDTH = 50;
     public static final int PAGINATION_PREF_HEIGHT = 32;
     public static final String DELETE_ICON_PATH = "/images/delete-button.png";
     public static final String CENTER_CELL_CSS_CLASS = "table-cell-center";
-    public static final String LEFT_CELL_CSS_CLASS = "table-cell-left";
     public static final String RIGHT_CELL_CSS_CLASS = "table-cell-right";
     public static final String CENTER_CELL_DELETE_CSS_CLASS = "table-cell-delete-center";
     public static final String DELETE_BUTTON_CSS_CLASS = "project-list-fragment-delete-button";
@@ -75,9 +73,6 @@ public class ProjectListFragment {
 
     @FXML
     private HBox selectedItemsContainer;
-
-    @FXML
-    private ImageView deleteAllButton;
 
     @FXML
     private TableView<ProjectSearchResult> projectTableView;
@@ -230,7 +225,7 @@ public class ProjectListFragment {
         private Button createDeleteButton() {
             Button button = new Button();
             button.setGraphic(createDeleteIcon());
-            button.setStyle("-fx-background-color: transparent;");
+            button.getStyleClass().add(DELETE_BUTTON_CSS_CLASS);
             return button;
         }
 
@@ -250,8 +245,6 @@ public class ProjectListFragment {
                     I18N.get(ApplicationBundleKey.LABEL_CONTENT_DELETE_ALERT),
                     I18N.get(ApplicationBundleKey.BUTTON_DELETE_DELETE_ALERT),
                     I18N.get(ApplicationBundleKey.BUTTON_CANCEL_DELETE_ALERT),
-                    "#ff0000",
-                    "#cccccc",
                     Alert.AlertType.WARNING);
             boolean confirmed = confirmDialog.showConfirmationDialog();
 
@@ -272,7 +265,7 @@ public class ProjectListFragment {
     }
 
     private void setupDeleteAllButtonAction() {
-        deleteAllButton.setOnMouseClicked(event -> handleDeleteAllButtonClick());
+        deleteSelectedItemsText.setOnMouseClicked(event -> handleDeleteAllButtonClick());
     }
 
     private void handleDeleteAllButtonClick() {
@@ -282,8 +275,6 @@ public class ProjectListFragment {
                 I18N.get(ApplicationBundleKey.LABEL_CONTENT_DELETE_ALL_ALERT),
                 I18N.get(ApplicationBundleKey.BUTTON_DELETE_DELETE_ALERT),
                 I18N.get(ApplicationBundleKey.BUTTON_CANCEL_DELETE_ALERT),
-                "#ff0000",
-                "#cccccc",
                 Alert.AlertType.WARNING);
         boolean confirmed = confirmDialog.showConfirmationDialog();
 

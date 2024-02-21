@@ -1,21 +1,39 @@
 package org.elca.neosis.util;
 
+import org.elca.neosis.common.ApplicationBundleKey;
 import org.elca.neosis.proto.ProjectStatus;
 
+import java.util.ResourceBundle;
+
 public class ApplicationMapper {
-    public static String convertToProjectStatus(ProjectStatus status) {
+    public static ProjectStatus convertToProjectStatus(String status, ResourceBundle resourceBundle) {
+        if (resourceBundle.getString(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY).equals(status)) {
+            return ProjectStatus.NEW;
+        }
+        if (resourceBundle.getString(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY).equals(status)) {
+            return ProjectStatus.PLA;
+        }
+        if (resourceBundle.getString(ApplicationBundleKey.PROJECT_IN_PROGRESS_STATUS_KEY).equals(status)) {
+            return ProjectStatus.INP;
+        }
+        if (resourceBundle.getString(ApplicationBundleKey.PROJECT_FINISHED_STATUS_KEY).equals(status)) {
+            return ProjectStatus.FIN;
+        }
+        return null;
+    }
+    public static String convertToProjectStatus(ProjectStatus status, ResourceBundle resourceBundle) {
         if (status == null) {
             return null;
         }
         switch (status) {
             case NEW:
-                return "New";
+                return resourceBundle.getString(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY);
             case PLA:
-                return "Planned";
+                return resourceBundle.getString(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY);
             case INP:
-                return "In progress";
+                return resourceBundle.getString(ApplicationBundleKey.PROJECT_IN_PROGRESS_STATUS_KEY);
             case FIN:
-                return "Finished";
+                return resourceBundle.getString(ApplicationBundleKey.PROJECT_FINISHED_STATUS_KEY);
             default:
                 return null;
         }

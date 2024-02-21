@@ -1,7 +1,7 @@
 
 ^
-java:S1075,"ARefactor your code to get this URI from a customizable parameter.(™¹š€8–Õ¥ÏÜ1
+java:S1075+"ARefactor your code to get this URI from a customizable parameter.(™¹š€8–Õ¥ÏÜ1
 |
-java:S1171¬"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ8¡Õ¥ÏÜ1
+java:S1171£"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ8¡Õ¥ÏÜ1
 Q
-java:S1144"3Remove this unused private "getAllProjects" method.(æÎö8©Õ¥ÏÜ1
+java:S1144†"3Remove this unused private "getAllProjects" method.(æÎö8©Õ¥ÏÜ1

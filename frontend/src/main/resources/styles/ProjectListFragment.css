@@ -92,6 +92,7 @@
 }
 
 .pagination {
+    -fx-cursor: hand;
     -fx-page-information-visible: false;
 }
 
@@ -107,9 +108,14 @@
 }
 
 .project-list-fragment-danger-text {
+    -fx-cursor: hand;
     -fx-text-fill: #FF3B31;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
+}
+
+.project-list-fragment-delete-button {
+    -fx-background-color: transparent;
 }
 
 .project-list-fragment-delete-button:hover {

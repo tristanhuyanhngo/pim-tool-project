@@ -173,8 +173,6 @@ public class ProjectDetailFragment {
                     I18N.get(ApplicationBundleKey.LABEL_CONTENT_CREATE_ALERT),
                     I18N.get(ApplicationBundleKey.BUTTON_CREATE_CREATE_ALERT),
                     I18N.get(ApplicationBundleKey.BUTTON_CANCEL_CREATE_ALERT),
-                    "#2F85FA",
-                    "#cccccc",
                     Alert.AlertType.CONFIRMATION);
             boolean confirmed = confirmDialog.showConfirmationDialog();
 
@@ -219,8 +217,6 @@ public class ProjectDetailFragment {
                     I18N.get(ApplicationBundleKey.LABEL_CONTENT_UPDATE_ALERT),
                     I18N.get(ApplicationBundleKey.BUTTON_UPDATE_UPDATE_ALERT),
                     I18N.get(ApplicationBundleKey.BUTTON_CANCEL_UPDATE_ALERT),
-                    "#2F85FA",
-                    "#cccccc",
                     Alert.AlertType.CONFIRMATION);
             boolean confirmed = confirmDialog.showConfirmationDialog();
 

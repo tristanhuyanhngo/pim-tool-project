@@ -32,12 +32,6 @@ public class HeaderComponent implements FXComponent {
     @FXML
     private Label labelAppTitle;
 
-    @FXML
-    private Label labelHelpButton;
-
-    @FXML
-    private Label labelLogoutButton;
-
     @Override
     public Node postHandle(Node node, Message<Event, Object> message) throws Exception {
         labelEN.setOnMouseClicked(event -> {
@@ -65,7 +59,5 @@ public class HeaderComponent implements FXComponent {
 
     private void initMultilingual() {
         labelAppTitle.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_APP_TITLE));
-        labelHelpButton.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_HELP_BUTTON));
-        labelLogoutButton.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_LOGOUT_BUTTON));
     }
 }
