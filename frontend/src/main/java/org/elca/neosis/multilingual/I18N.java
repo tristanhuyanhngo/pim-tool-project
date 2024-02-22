@@ -75,6 +75,18 @@ public final class I18N {
         return MessageFormat.format(bundle.getString(key), args);
     }
 
+    public static List<String> getAll(final String key, final Object... args) {
+        List<Locale> supportedLocales = getSupportedLocales();
+        List<String> result = new ArrayList<>();
+
+        for (Locale locale : supportedLocales) {
+            ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, locale);
+            result.add(MessageFormat.format(bundle.getString(key), args));
+        }
+
+        return result;
+    }
+
     /**
      * creates a String binding to a localized String for the given message bundle key
      *
