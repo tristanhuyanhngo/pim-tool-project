@@ -4,38 +4,40 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      VBox.vgrow="ALWAYS"
-      stylesheets="@../styles/ConnectionErrorFragment.css"
-      spacing="15"
->
+
+<VBox spacing="15" stylesheets="@../styles/ConnectionErrorFragment.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
-        <Insets top="80"/>
+        <Insets top="80" />
     </padding>
-    <HBox alignment="CENTER" spacing="50">
-        <ImageView preserveRatio="true">
-            <Image url="@../images/error-connection.png"/>
-        </ImageView>
-        <VBox styleClass="connection-error-fragment-container" spacing="30" alignment="CENTER_LEFT">
-            <VBox spacing="15">
-                <Label fx:id="unexpectedError" styleClass="connection-error-fragment-main-color"
-                       text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.unexpectedError"/>
-                <HBox>
-                    <Label fx:id="please" styleClass="connection-error-fragment-main-color"
-                           text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.please"/>
-                    <Label fx:id="contactYourAdministrator" styleClass="connection-error-fragment-red-color"
-                           text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.contactYourAdmin"/>
-                </HBox>
-            </VBox>
-            <HBox>
-                <Label fx:id="or" styleClass="connection-error-fragment-main-color"
-                       text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.or"/>
-                <Label fx:id="backToSearchProject" styleClass="connection-error-fragment-blue-color"
-                       text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.backToSearchProject"/>
-            </HBox>
-        </VBox>
-    </HBox>
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <right>
+           <VBox alignment="CENTER_LEFT" spacing="30" styleClass="connection-error-fragment-container" BorderPane.alignment="CENTER">
+               <VBox spacing="15">
+                   <Label fx:id="unexpectedError" styleClass="connection-error-fragment-main-color" text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.unexpectedError" />
+                   <HBox>
+                       <Label fx:id="please" styleClass="connection-error-fragment-main-color" text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.please" />
+                       <Label fx:id="contactYourAdministrator" styleClass="connection-error-fragment-red-color" text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.contactYourAdmin" />
+                   </HBox>
+               </VBox>
+               <HBox>
+                   <Label fx:id="or" styleClass="connection-error-fragment-main-color" text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.or" />
+                   <Label fx:id="backToSearchProject" styleClass="connection-error-fragment-blue-color" text="%MainPerspective.MainContentComponent.ConnectionErrorFragment.label.backToSearchProject" />
+               </HBox>
+            <BorderPane.margin>
+               <Insets left="40.0" right="500.0" />
+            </BorderPane.margin>
+           </VBox>
+      </right>
+      <left>
+           <ImageView preserveRatio="true" BorderPane.alignment="CENTER">
+               <Image url="@../images/error-connection.png" />
+            <BorderPane.margin>
+               <Insets left="400.0" />
+            </BorderPane.margin>
+           </ImageView>
+      </left>
+   </BorderPane>
 </VBox>

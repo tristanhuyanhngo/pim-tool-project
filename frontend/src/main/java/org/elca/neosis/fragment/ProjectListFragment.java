@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import org.elca.neosis.common.ApplicationBundleKey;
+import org.elca.neosis.common.ui.ConfirmationAlert;
 import org.elca.neosis.common.ui.NotificationAlert;
 import org.elca.neosis.component.MainContentComponent;
 import org.elca.neosis.grpc.Grpc;
@@ -21,13 +22,13 @@ import org.elca.neosis.model.SearchConditionState;
 import org.elca.neosis.multilingual.I18N;
 import org.elca.neosis.proto.*;
 import org.elca.neosis.util.ApplicationMapper;
-import org.elca.neosis.common.ui.ConfirmationAlert;
 import org.jacpfx.api.annotations.Resource;
 import org.jacpfx.api.annotations.fragment.Fragment;
 import org.jacpfx.api.fragment.Scope;
 import org.jacpfx.rcp.context.Context;
 
 import java.util.*;
+
 import static org.elca.neosis.util.ApplicationMapper.convertToProjectStatus;
 
 @Fragment(
@@ -112,7 +113,6 @@ public class ProjectListFragment {
         initProjectStatus();
         initCheckboxColumn();
         initHyperlinkProjectNumberColumn();
-        initTableViewOrderByProjectNumber();
         initDeleteButton();
         initResetButton();
         setInitialLayout();
@@ -153,10 +153,6 @@ public class ProjectListFragment {
 
     private void initTableCellHeight() {
         projectTableView.setFixedCellSize(50);
-    }
-
-    private void initTableViewOrderByProjectNumber() {
-        projectNumberColumn.setComparator(Comparator.comparingInt(Integer::intValue));
     }
 
     private void initCheckboxColumn() {
@@ -343,6 +339,17 @@ public class ProjectListFragment {
     }
 
     private void initProjectStatus() {
+        I18N.localeProperty().addListener(((observable, oldValue, newValue) -> {
+            projectStatusCombobox.getItems().setAll(
+                    I18N.get(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY),
+                    I18N.get(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY),
+                    I18N.get(ApplicationBundleKey.PROJECT_IN_PROGRESS_STATUS_KEY),
+                    I18N.get(ApplicationBundleKey.PROJECT_FINISHED_STATUS_KEY)
+            );
+
+            projectStatusCombobox.setValue(currentSelectedStatusIndex == -1 ? null : projectStatusCombobox.getItems().get(currentSelectedStatusIndex));
+        }));
+
         projectStatusCombobox.getItems().setAll(
                 I18N.get(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY),
                 I18N.get(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY),
@@ -385,25 +392,6 @@ public class ProjectListFragment {
     @FXML
     private void handleSearchButtonClick(ActionEvent event) {
         updateTableView(FIRST_PAGE_INDEX);
-    }
-
-    private void getAllProjects() {
-        try {
-            Grpc client = Grpc.getInstance();
-            ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
-            Iterator<SearchResult> iterator = stub.getAllProjects(Empty.newBuilder().build());
-            ObservableList<ProjectSearchResult> items = FXCollections.observableArrayList();
-            while (iterator.hasNext()) {
-                SearchResult searchResult = iterator.next();
-                items.add(new ProjectSearchResult(searchResult.getNumber(),
-                        searchResult.getName(), convertToProjectStatus(searchResult.getStatus()),
-                        searchResult.getCustomer(),
-                        searchResult.getStartDate()));
-            }
-            projectTableView.setItems(items);
-        } catch (StatusRuntimeException e) {
-            e.printStackTrace();
-        }
     }
 
     private void countAllProjectsWithConditions() {

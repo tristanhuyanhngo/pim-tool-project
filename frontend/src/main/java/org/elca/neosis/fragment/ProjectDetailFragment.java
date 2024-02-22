@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.LocalDateStringConverter;
 import org.elca.neosis.common.ApplicationBundleKey;
@@ -32,12 +31,7 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-@Fragment(
-        id = ProjectDetailFragment.ID,
-        viewLocation = "/fxml/ProjectDetailFragment.fxml",
-        resourceBundleLocation = I18N.BUNDLE_NAME,
-        scope = Scope.PROTOTYPE
-)
+@Fragment(id = ProjectDetailFragment.ID, viewLocation = "/fxml/ProjectDetailFragment.fxml", resourceBundleLocation = I18N.BUNDLE_NAME, scope = Scope.PROTOTYPE)
 public class ProjectDetailFragment {
     public static final String ID = "ProjectDetailFragment";
     public static final String FIELD_ERROR_CSS_CLASS = "project-detail-fragment-text-input-error";
@@ -117,6 +111,9 @@ public class ProjectDetailFragment {
     @FXML
     private Label fragmentTitle;
 
+    @FXML
+    private Label startDateAfterEndDateErrors;
+
 
     private void initMultilingual() {
         // Init multilingual for labels
@@ -133,14 +130,12 @@ public class ProjectDetailFragment {
         projectNumberExistedMessage.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_PROJECT_NUMBER_EXISTED));
 
         // Init multilingual for buttons
-
         cancelButton.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_PROJECT_DETAIL_FRAGMENT_CANCEL_BUTTON));
 
         // Init multilingual for datepicker
         I18N.localeProperty().addListener((observable, oldValue, newValue) -> {
             startDateInput.setChronology(MinguoChronology.INSTANCE);
             startDateInput.setChronology(Chronology.ofLocale(newValue));
-
             endDateInput.setChronology(MinguoChronology.INSTANCE);
             endDateInput.setChronology(Chronology.ofLocale(newValue));
         });
@@ -164,33 +159,15 @@ public class ProjectDetailFragment {
         List<Node> requiredEmptyTextFields = getEmptyRequiredInputFields();
         if (!requiredEmptyTextFields.isEmpty()) {
             errorContainer.setVisible(true);
-            requiredEmptyTextFields.forEach(textField ->
-                    textField.getStyleClass().add(FIELD_ERROR_CSS_CLASS));
+            requiredEmptyTextFields.forEach(textField -> textField.getStyleClass().add(FIELD_ERROR_CSS_CLASS));
         } else {
-            ConfirmationAlert confirmDialog = new ConfirmationAlert(
-                    I18N.get(ApplicationBundleKey.LABEL_TITLE_CREATE_ALERT),
-                    I18N.get(ApplicationBundleKey.LABEL_HEADER_CREATE_ALERT),
-                    I18N.get(ApplicationBundleKey.LABEL_CONTENT_CREATE_ALERT),
-                    I18N.get(ApplicationBundleKey.BUTTON_CREATE_CREATE_ALERT),
-                    I18N.get(ApplicationBundleKey.BUTTON_CANCEL_CREATE_ALERT),
-                    Alert.AlertType.CONFIRMATION);
+            ConfirmationAlert confirmDialog = new ConfirmationAlert(I18N.get(ApplicationBundleKey.LABEL_TITLE_CREATE_ALERT), I18N.get(ApplicationBundleKey.LABEL_HEADER_CREATE_ALERT), I18N.get(ApplicationBundleKey.LABEL_CONTENT_CREATE_ALERT), I18N.get(ApplicationBundleKey.BUTTON_CREATE_CREATE_ALERT), I18N.get(ApplicationBundleKey.BUTTON_CANCEL_CREATE_ALERT), Alert.AlertType.CONFIRMATION);
             boolean confirmed = confirmDialog.showConfirmationDialog();
 
             if (confirmed) {
                 LocalDate endDate = endDateInput.getValue();
-                Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL))
-                        .map(String::trim)
-                        .collect(Collectors.toSet());
-                NewProject request = NewProject.newBuilder()
-                        .setNumber(Integer.parseInt(projectNumberInput.getText()))
-                        .setName(projectNameInput.getText())
-                        .setCustomer(customerInput.getText())
-                        .setGroupId(groupInput.getValue())
-                        .setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue()))
-                        .addAllMembers(members)
-                        .setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
-                        .setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "")
-                        .build();
+                Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL)).map(String::trim).filter(visa -> !visa.isEmpty()).collect(Collectors.toSet());
+                NewProject request = NewProject.newBuilder().setNumber(Integer.parseInt(projectNumberInput.getText())).setName(projectNameInput.getText()).setCustomer(customerInput.getText()).setGroupId(groupInput.getValue()).setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue())).addAllMembers(members).setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER))).setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "").build();
                 try {
                     Grpc client = Grpc.getInstance();
                     ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
@@ -202,41 +179,22 @@ public class ProjectDetailFragment {
             }
         }
     }
+
     private void handleEditProject(Project project) {
         hideErrorMessage();
         removeErrorClassFromTextFields();
         List<Node> requiredEmptyTextFields = getEmptyRequiredInputFields();
         if (!requiredEmptyTextFields.isEmpty()) {
             errorContainer.setVisible(true);
-            requiredEmptyTextFields.forEach(textField ->
-                    textField.getStyleClass().add(FIELD_ERROR_CSS_CLASS));
+            requiredEmptyTextFields.forEach(textField -> textField.getStyleClass().add(FIELD_ERROR_CSS_CLASS));
         } else {
-            ConfirmationAlert confirmDialog = new ConfirmationAlert(
-                    I18N.get(ApplicationBundleKey.LABEL_TITLE_UPDATE_ALERT),
-                    I18N.get(ApplicationBundleKey.LABEL_HEADER_UPDATE_ALERT),
-                    I18N.get(ApplicationBundleKey.LABEL_CONTENT_UPDATE_ALERT),
-                    I18N.get(ApplicationBundleKey.BUTTON_UPDATE_UPDATE_ALERT),
-                    I18N.get(ApplicationBundleKey.BUTTON_CANCEL_UPDATE_ALERT),
-                    Alert.AlertType.CONFIRMATION);
+            ConfirmationAlert confirmDialog = new ConfirmationAlert(I18N.get(ApplicationBundleKey.LABEL_TITLE_UPDATE_ALERT), I18N.get(ApplicationBundleKey.LABEL_HEADER_UPDATE_ALERT), I18N.get(ApplicationBundleKey.LABEL_CONTENT_UPDATE_ALERT), I18N.get(ApplicationBundleKey.BUTTON_UPDATE_UPDATE_ALERT), I18N.get(ApplicationBundleKey.BUTTON_CANCEL_UPDATE_ALERT), Alert.AlertType.CONFIRMATION);
             boolean confirmed = confirmDialog.showConfirmationDialog();
 
             if (confirmed) {
                 LocalDate endDate = endDateInput.getValue();
-                Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL))
-                        .map(String::trim)
-                        .collect(Collectors.toSet());
-                Project request = Project.newBuilder()
-                        .setId(project.getId())
-                        .setVersion(project.getVersion())
-                        .setNumber(Integer.parseInt(projectNumberInput.getText()))
-                        .setName(projectNameInput.getText())
-                        .setCustomer(customerInput.getText())
-                        .setGroupId(groupInput.getValue())
-                        .setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue()))
-                        .addAllMembers(members)
-                        .setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
-                        .setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "")
-                        .build();
+                Set<String> members = Arrays.stream(membersInput.getText().split(MEMBER_SEPARATOR_SYMBOL)).map(String::trim).filter(visa -> !visa.isEmpty()).collect(Collectors.toSet());
+                Project request = Project.newBuilder().setId(project.getId()).setVersion(project.getVersion()).setNumber(Integer.parseInt(projectNumberInput.getText())).setName(projectNameInput.getText()).setCustomer(customerInput.getText()).setGroupId(groupInput.getValue()).setStatus(ApplicationMapper.convertToProjectStatus(statusInput.getValue())).addAllMembers(members).setStartDate(startDateInput.getValue().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER))).setEndDate(!Objects.isNull(endDate) ? endDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)) : "").build();
                 try {
                     Grpc client = Grpc.getInstance();
                     ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
@@ -252,14 +210,13 @@ public class ProjectDetailFragment {
     public void init(Integer projectNumber) {
         // Init formatter
         initProjectNumberFormatter();
-        initProjectNameFormatter();
-        initCustomerFormatter();
+        initStringTextFieldFormatter();
         initDatePickerFormatter();
         // Init input
         initDatePickers();
         initMembersInput();
         initGroupComboboxInput();
-        initStatusProject();
+        initProjectStatus();
         // Init handling
         bindNodeVisible();
         closeButtonErrorContainer.setOnMouseClicked(event -> errorContainer.setVisible(false));
@@ -276,17 +233,14 @@ public class ProjectDetailFragment {
             initMultilingualEditProject();
             submitButton.setOnAction(event -> handleEditProject(project));
         }
-        statusInput.valueProperty().addListener(((observable, oldValue, newValue) ->
-                currentSelectedStatusIndex = statusInput.getSelectionModel().getSelectedIndex()));
+        statusInput.valueProperty().addListener(((observable, oldValue, newValue) -> currentSelectedStatusIndex = statusInput.getSelectionModel().getSelectedIndex()));
     }
 
     private Project initLayout(Integer projectNumber) {
         try {
             Grpc client = Grpc.getInstance();
             ProjectServiceGrpc.ProjectServiceBlockingStub stub = client.getProjectServiceStub();
-            Project response = stub.getProjectByNumber(ProjectNumber.newBuilder()
-                    .setNumber(projectNumber)
-                    .build());
+            Project response = stub.getProjectByNumber(ProjectNumber.newBuilder().setNumber(projectNumber).build());
             if (response.getIsExisted()) {
                 projectNumberInput.setText(String.valueOf(projectNumber));
                 projectNameInput.setText(response.getName());
@@ -312,8 +266,21 @@ public class ProjectDetailFragment {
         getAllGroupIDs();
     }
 
-    private void initStatusProject() {
-        statusInput.getItems().addAll("New", "Planned", "In progress", "Finished");
+    private void initProjectStatus() {
+        I18N.localeProperty().addListener(((observable, oldValue, newValue) -> {
+            statusInput.getItems().setAll(
+                    I18N.get(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY),
+                    I18N.get(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY),
+                    I18N.get(ApplicationBundleKey.PROJECT_IN_PROGRESS_STATUS_KEY),
+                    I18N.get(ApplicationBundleKey.PROJECT_FINISHED_STATUS_KEY)
+            );
+        }));
+        statusInput.getItems().setAll(
+                I18N.get(ApplicationBundleKey.PROJECT_NEW_STATUS_KEY),
+                I18N.get(ApplicationBundleKey.PROJECT_PLANNED_STATUS_KEY),
+                I18N.get(ApplicationBundleKey.PROJECT_IN_PROGRESS_STATUS_KEY),
+                I18N.get(ApplicationBundleKey.PROJECT_FINISHED_STATUS_KEY)
+        );
         statusInput.getSelectionModel().selectFirst();
     }
 
@@ -328,14 +295,11 @@ public class ProjectDetailFragment {
     }
 
     private void initDatePickers() {
-        restrictToNumericInput(startDateInput);
-        restrictToNumericInput(endDateInput);
-
         startDateInput.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || date.getYear() != YearMonth.now().getYear());
+                setDisable(empty || date.getYear() < YearMonth.now().getYear() - 1);
             }
         });
 
@@ -354,34 +318,30 @@ public class ProjectDetailFragment {
     }
 
     private void initDatePickerFormatter() {
+        limitDatePickerInput(startDateInput);
+        limitDatePickerInput(endDateInput);
         startDateInput.setConverter(new LocalDateStringConverter(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER), null));
         endDateInput.setConverter(new LocalDateStringConverter(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER), null));
     }
 
-    private void restrictToNumericInput(DatePicker datePicker) {
-        datePicker.getEditor().addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            char inputChar = event.getCharacter().charAt(0);
-            if (!Character.isDigit(inputChar)) {
-                event.consume();
+    private void limitDatePickerInput(DatePicker datePicker) {
+        TextFormatter<String> textFormatter = new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("[\\d.]*")) {
+                return change;
+            } else {
+                return null;
             }
         });
+        datePicker.getEditor().setTextFormatter(textFormatter);
     }
 
-    private void initProjectNameFormatter() {
-        UnaryOperator<TextFormatter.Change> filter = change -> {
-            String newText = change.getControlNewText();
-            // Check if newText does not exceed 50 characters in length
-            if (newText.length() <= 50) {
-                return change; // Allowing input
-            }
-            return null; // Restricting invalid characters
-        };
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        projectNameInput.setTextFormatter(textFormatter);
+    private void initStringTextFieldFormatter() {
+        projectNameInput.setTextFormatter(initStringTextFieldInput());
+        customerInput.setTextFormatter(initStringTextFieldInput());
     }
 
-    private void initCustomerFormatter() {
+    private TextFormatter<String> initStringTextFieldInput() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
             if (newText.length() <= 50) {
@@ -389,9 +349,7 @@ public class ProjectDetailFragment {
             }
             return null;
         };
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        customerInput.setTextFormatter(textFormatter);
+        return new TextFormatter<>(filter);
     }
 
 
@@ -399,11 +357,8 @@ public class ProjectDetailFragment {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String newText = change.getControlNewText();
             // Check if newText contains numbers
-            if (newText.matches("\\d*")) {
-                // Check the limits of Integer
-                if (newText.isEmpty() || isValidInteger(newText)) {
-                    return change; // Allowing input
-                }
+            if (newText.matches("\\d*") && (newText.isEmpty() || isValidInteger(newText))) {
+                return change; // Allowing input
             }
             return null; // Restricting invalid characters
         };
@@ -450,11 +405,13 @@ public class ProjectDetailFragment {
                     String formattedResult = " {" + String.join(",", invalidVisasList) + "}";
                     invalidVisas.setText(formattedResult);
                     break;
+                case START_DATE_AFTER_END_DATE:
+                    startDateInput.getStyleClass().add(FIELD_ERROR_CSS_CLASS);
+                    endDateInput.getStyleClass().add(FIELD_ERROR_CSS_CLASS);
+                    startDateAfterEndDateErrors.setVisible(true);
+                    break;
                 case CAN_NOT_UPDATE_PROJECT:
-                    NotificationAlert notificationAlert= new NotificationAlert(
-                            I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_TITLE),
-                            I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_HEADER),
-                            I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_CONTENT));
+                    NotificationAlert notificationAlert = new NotificationAlert(I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_TITLE), I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_HEADER), I18N.get(ApplicationBundleKey.LABEL_ERROR_UPDATING_DIALOG_CONTENT));
                     notificationAlert.showConfirmationDialog();
                     break;
                 default:

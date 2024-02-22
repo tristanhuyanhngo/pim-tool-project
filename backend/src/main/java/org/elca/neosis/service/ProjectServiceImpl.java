@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.elca.neosis.util.ApplicationMapper;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
@@ -43,12 +45,12 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
         List<Project> projects = projectRepository.findAllProjects();
         projects.forEach(project -> responseObserver.onNext(
                 SearchResult.newBuilder()
-                     .setNumber(project.getNumber())
-                     .setName(project.getName())
-                     .setStatus(project.getStatus())
-                     .setCustomer(project.getCustomer())
-                     .setStartDate(project.getStartDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
-                     .build()));
+                        .setNumber(project.getNumber())
+                        .setName(project.getName())
+                        .setStatus(project.getStatus())
+                        .setCustomer(project.getCustomer())
+                        .setStartDate(project.getStartDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTER)))
+                        .build()));
         responseObserver.onCompleted();
     }
 
@@ -99,7 +101,7 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
     public void searchProject(SearchCondition request, StreamObserver<SearchResult> responseObserver) {
         SearchConditionDTO dto = ApplicationMapper.mapSearchConditionProtoToDTO(request);
         List<Project> projects = projectRepository.findAllProjectsWithCondition(dto);
-                projects.forEach(project -> responseObserver.onNext(
+        projects.forEach(project -> responseObserver.onNext(
                 SearchResult.newBuilder()
                         .setNumber(project.getNumber())
                         .setName(project.getName())
@@ -137,28 +139,33 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
             try {
                 ProjectDTO projectDTO = ApplicationMapper.mapProjectProtoToDTO(request);
 
-                Project project = new Project();
-                project.setNumber(projectDTO.getNumber());
-                project.setName(projectDTO.getName());
-                project.setCustomer(projectDTO.getCustomer());
-                project.setStatus(projectDTO.getStatus());
-                project.setStartDate(projectDTO.getStartDate());
-                project.setEndDate(projectDTO.getEndDate());
+                if (isStartDateAfterEndDate(projectDTO.getStartDate(), projectDTO.getEndDate())) {
+                    responseBuilder.setIsSuccess(false);
+                    responseBuilder.addStatus(ResponseStatus.START_DATE_AFTER_END_DATE);
+                } else {
+                    Project project = new Project();
+                    project.setNumber(projectDTO.getNumber());
+                    project.setName(projectDTO.getName());
+                    project.setCustomer(projectDTO.getCustomer());
+                    project.setStatus(projectDTO.getStatus());
+                    project.setStartDate(projectDTO.getStartDate());
+                    project.setEndDate(projectDTO.getEndDate());
 
-                project.addGroup(groupRepository.getGroupById(projectDTO.getGroupId()));
-                Project savedProject = projectRepository.save(project);
-                List<Employee> employees = employeeRepository.findAllByVisa(new HashSet<>(request.getMembersList()));
-                List<ProjectEmployee> projectEmployees = employees.stream()
-                        .map(employee -> new ProjectEmployee(
-                                new ProjectEmployeeID(
-                                        savedProject.getId(),
-                                        employee.getId()),
-                                        savedProject,
-                                        employee))
-                        .collect(Collectors.toList());
+                    project.addGroup(groupRepository.getGroupById(projectDTO.getGroupId()));
+                    Project savedProject = projectRepository.save(project);
+                    List<Employee> employees = employeeRepository.findAllByVisa(new HashSet<>(request.getMembersList()));
+                    List<ProjectEmployee> projectEmployees = employees.stream()
+                            .map(employee -> new ProjectEmployee(
+                                    new ProjectEmployeeID(
+                                            savedProject.getId(),
+                                            employee.getId()),
+                                    savedProject,
+                                    employee))
+                            .collect(Collectors.toList());
 
-                projectEmployeeRepository.saveAll(projectEmployees);
-                responseBuilder.addStatus(ResponseStatus.OPERATION_SUCCESS);
+                    projectEmployeeRepository.saveAll(projectEmployees);
+                    responseBuilder.addStatus(ResponseStatus.OPERATION_SUCCESS);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 responseBuilder.setIsSuccess(false);
@@ -192,31 +199,35 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
                             .setIsSuccess(false)
                             .addStatus(ResponseStatus.CAN_NOT_UPDATE_PROJECT);
                 } else {
-                    existedProject.setName(request.getName());
-                    existedProject.setCustomer(request.getCustomer());
-                    existedProject.setStatus(request.getStatus());
-                    existedProject.setStartDate(ApplicationMapper.convertToLocalDate(request.getStartDate()));
-                    existedProject.setEndDate(ApplicationMapper.convertToLocalDate(request.getEndDate()));
-                    existedProject.addGroup(groupRepository.getGroupById(request.getGroupId()));
+                    if (isStartDateAfterEndDate(ApplicationMapper.convertToLocalDate(request.getStartDate()), ApplicationMapper.convertToLocalDate(request.getEndDate()))) {
+                        responseBuilder.setIsSuccess(false);
+                        responseBuilder.addStatus(ResponseStatus.START_DATE_AFTER_END_DATE);
+                    } else {
+                        existedProject.setName(request.getName());
+                        existedProject.setCustomer(request.getCustomer());
+                        existedProject.setStatus(request.getStatus());
+                        existedProject.setStartDate(ApplicationMapper.convertToLocalDate(request.getStartDate()));
+                        existedProject.setEndDate(ApplicationMapper.convertToLocalDate(request.getEndDate()));
+                        existedProject.addGroup(groupRepository.getGroupById(request.getGroupId()));
 
-                    Project savedProject = projectRepository.save(existedProject);
+                        Project savedProject = projectRepository.save(existedProject);
 
-                    List<ProjectEmployee> existingProjectEmployees = projectEmployeeRepository.getAllByProjectID(request.getId());
-                    projectEmployeeRepository.deleteAll(existingProjectEmployees);
+                        List<ProjectEmployee> existingProjectEmployees = projectEmployeeRepository.getAllByProjectID(request.getId());
+                        projectEmployeeRepository.deleteAll(existingProjectEmployees);
 
-                    List<Employee> employees = employeeRepository.findAllByVisa(new HashSet<>(request.getMembersList()));
-                    List<ProjectEmployee> projectEmployees = employees.stream()
-                            .map(employee -> new ProjectEmployee(
-                                    new ProjectEmployeeID(
-                                            savedProject.getId(),
-                                            employee.getId()),
-                                    savedProject,
-                                    employee))
-                            .collect(Collectors.toList());
+                        List<Employee> employees = employeeRepository.findAllByVisa(new HashSet<>(request.getMembersList()));
+                        List<ProjectEmployee> projectEmployees = employees.stream()
+                                .map(employee -> new ProjectEmployee(
+                                        new ProjectEmployeeID(
+                                                savedProject.getId(),
+                                                employee.getId()),
+                                        savedProject,
+                                        employee))
+                                .collect(Collectors.toList());
 
-                    projectEmployeeRepository.saveAll(projectEmployees);
-                    responseBuilder.addStatus(ResponseStatus.OPERATION_SUCCESS);
-
+                        projectEmployeeRepository.saveAll(projectEmployees);
+                        responseBuilder.addStatus(ResponseStatus.OPERATION_SUCCESS);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -233,9 +244,9 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
         responseBuilder.setIsSuccess(true);
         // Validation for Project Number
         if (!validProjectNumber && (projectRepository.findProjectNumber(newProject.getNumber()))) {
-                responseBuilder
-                        .setIsSuccess(false)
-                        .addStatus(ResponseStatus.PROJECT_NUMBER_EXISTED);
+            responseBuilder
+                    .setIsSuccess(false)
+                    .addStatus(ResponseStatus.PROJECT_NUMBER_EXISTED);
 
         }
         // Validation for Visa
@@ -264,4 +275,7 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
         responseObserver.onCompleted();
     }
 
+    public boolean isStartDateAfterEndDate(LocalDate startDate, LocalDate endDate) {
+        return startDate != null && endDate != null && startDate.isAfter(endDate);
+    }
 }

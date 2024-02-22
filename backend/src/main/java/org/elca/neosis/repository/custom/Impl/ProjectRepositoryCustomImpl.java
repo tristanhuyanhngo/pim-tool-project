@@ -46,7 +46,8 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
         JPAQuery<Project> query = new JPAQuery<>(em)
                 .select(project)
                 .from(project)
-                .where(builder);
+                .where(builder)
+                .orderBy(project.number.asc());
 
         if (haveStatus) {
             query.where(project.status.eq(status));
