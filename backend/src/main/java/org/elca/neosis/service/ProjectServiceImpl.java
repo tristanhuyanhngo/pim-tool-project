@@ -99,6 +99,7 @@ public class ProjectServiceImpl extends ProjectServiceGrpc.ProjectServiceImplBas
 
     @Override
     public void searchProject(SearchCondition request, StreamObserver<SearchResult> responseObserver) {
+        // Don't do like this. Must check if the keyword is null or empty !
         SearchConditionDTO dto = ApplicationMapper.mapSearchConditionProtoToDTO(request);
         List<Project> projects = projectRepository.findAllProjectsWithCondition(dto);
         projects.forEach(project -> responseObserver.onNext(

@@ -134,7 +134,7 @@
                     </HBox>
                 </HBox>
             </VBox>
-            <HBox spacing="10" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+            <HBox spacing="10" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6">
                 <Label fx:id="startDateAfterEndDateErrors" contentDisplay="CENTER" prefHeight="30.0"
                        styleClass="project-detail-fragment-business-error-message"
                        text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.startDateAfterEndDateError"
