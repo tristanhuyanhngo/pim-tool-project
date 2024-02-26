@@ -1,0 +1,124 @@
+/*.project-list-application {*/
+/*    -fx-background-color: #8dc78d;*/
+/*}*/
+
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-margin-top: 5;
+    -fx-margin-bottom: 10;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f4f4f4;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #0073e6; /* Màu nền khi chọn hàng */
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header,
+.table-cell {
+    -fx-padding: 0 0 0 10px;
+}
+
+.table-view .column-header .label,
+.table-cell {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .column-header.table-cell-right .label {
+    -fx-padding: 0 10px 0 0;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.table-cell-center {
+    -fx-padding: 0 0 0 0;
+    -fx-alignment: CENTER;
+}
+
+.table-cell-right {
+    -fx-padding: 0 10px 0 0;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.table-view .column-header.table-cell-center .label {
+    -fx-padding: 0 10px 0 0;
+    -fx-alignment: CENTER;
+}
+
+.project-list-fragment-reset-button {
+    -fx-font-size: 16px;
+    -fx-text-fill: #2F85FA;
+    -fx-font-weight: bold;
+}
+
+.project-list-fragment-reset-button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+.pagination > .pagination-control > .control-box {
+    -fx-spacing: 0;
+}
+
+.pagination > .pagination-control > .control-box > .number-button,
+.pagination > .pagination-control > .control-box > .bullet-button,
+.pagination > .pagination-control > .control-box > .left-arrow-button,
+.pagination > .pagination-control > .control-box > .right-arrow-button {
+    -fx-background-insets: 0, 1;
+    -fx-background-color: lightgray, #FAFAFA;
+    -fx-min-width: 40;
+    -fx-min-height: 40;
+}
+
+.pagination > .pagination-control > .control-box > .number-button:hover,
+.pagination > .pagination-control > .control-box > .bullet-button:hover,
+.pagination > .pagination-control > .control-box > .left-arrow-button:hover,
+.pagination > .pagination-control > .control-box > .right-arrow-button:hover {
+    -fx-background-insets: 0;
+    -fx-background-color: lightgray;
+}
+
+.pagination > .pagination-control > .control-box > .number-button:selected,
+.pagination > .pagination-control > .control-box > .bullet-button:selected{
+    -fx-background-insets: 0;
+    -fx-background-color: #2F85FA;
+    -fx-text-fill: white;
+}
+
+.pagination > .pagination-control {
+    -fx-font-size: 14px;
+}
+
+.pagination {
+    -fx-cursor: hand;
+    -fx-page-information-visible: false;
+}
+
+.project-list-fragment-selected-items-container {
+    -fx-background-color: #edf7f7;
+    -fx-border-color: lightgray;
+}
+
+.project-list-fragment-primary-text {
+    -fx-text-fill: #2F85FA;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.project-list-fragment-danger-text {
+    -fx-cursor: hand;
+    -fx-text-fill: #FF3B31;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.project-list-fragment-delete-button {
+    -fx-background-color: transparent;
+}
+
+.project-list-fragment-delete-button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}

@@ -1,0 +1,40 @@
+/*.header-application {*/
+/*    -fx-background-color: rgba(101, 144, 238, 0.64);*/
+/*}*/
+
+.header-short-separator {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+
+}
+.header-application-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #666666;
+}
+
+.header-language-option {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.header-button {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.header-language-option:hover,
+.header-button:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+.header-language-option-active,
+.header-help-button {
+    -fx-text-fill: #2F85FA;
+}
+
+.header-logout-button {
+    -fx-text-fill: #999999;
+}

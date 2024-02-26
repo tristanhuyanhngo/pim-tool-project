@@ -1,0 +1,106 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package org.elca.neosis.proto;
+
+enum ProjectStatus {
+  NEW = 0;
+  PLA = 1;
+  INP = 2;
+  FIN = 3;
+}
+
+enum ResponseStatus {
+  OPERATION_SUCCESS = 0;
+  PROJECT_NUMBER_EXISTED = 1;
+  PROJECT_NUMBER_NOT_EXISTED = 2;
+  EMPLOYEE_VISAS_NOT_EXISTED = 3;
+  START_DATE_AFTER_END_DATE = 4;
+  CAN_NOT_CREATE_PROJECT = 5;
+  CAN_NOT_UPDATE_PROJECT = 6;
+  CAN_NOT_DELETE_PROJECT = 7;
+  OTHER_ERROR = 8;
+}
+
+message Project {
+  int64 id = 1;
+  int32 number = 2;
+  string name = 3;
+  string customer = 4;
+  int64 group_id = 5;
+  repeated string members = 6;
+  ProjectStatus status = 7;
+  string start_date = 8;
+  string end_date = 9;
+  int32 version = 10;
+  bool is_existed = 11;
+}
+
+// Request
+message Empty {}
+
+message SearchCondition {
+  string keywords = 1;
+  bool have_status = 2;
+  ProjectStatus status = 3;
+  int32 page_size = 4;
+  int32 page_number = 5;
+}
+
+message NewProject {
+  int32 number = 1;
+  string name = 2;
+  string customer = 3;
+  int64 group_id = 4;
+  repeated string members = 5;
+  ProjectStatus status = 6;
+  string start_date = 7;
+  string end_date = 8;
+}
+
+message ProjectNumber {
+  int32 number = 1;
+}
+
+message ListProjectNumber {
+  repeated int32 number = 1;
+}
+
+message CountCondition {
+  string keywords = 1;
+  bool have_status = 2;
+  ProjectStatus status = 3;
+}
+
+// Response
+message SearchResult {
+  int32 number = 1;
+  string name = 2;
+  string customer = 3;
+  ProjectStatus status = 4;
+  string start_date = 5;
+}
+
+message CreateUpdateProjectResponse {
+  bool is_success = 1;
+  repeated ResponseStatus status = 2;
+  repeated string invalid_visa = 3;
+}
+
+message DeleteProjectResponse {
+  bool is_success = 1;
+  ResponseStatus status = 2;
+}
+
+message CountProjectResponse {
+  uint64 quantity = 1;
+}
+
+service ProjectService {
+  rpc getAllProjects(Empty) returns (stream SearchResult);
+  rpc getProjectByNumber(ProjectNumber) returns (Project);
+  rpc searchProject(SearchCondition) returns (stream SearchResult);
+  rpc createProject(NewProject) returns (CreateUpdateProjectResponse);
+  rpc deleteProject(ListProjectNumber) returns (DeleteProjectResponse);
+  rpc updateProject(Project) returns (CreateUpdateProjectResponse);
+  rpc countAllProjectWithConditions(CountCondition) returns (CountProjectResponse);
+}

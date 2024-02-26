@@ -1,0 +1,11 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(›Π¤Μψÿÿÿÿ8»βύσά1
+P
+java:S1172"-Remove this unused method parameter "status".(υπλÿÿÿÿÿ8Ϋβύσά1
+c
+java:S1128"ARemove this unused import 'org.elca.neosis.model.dto.ProjectDTO'.(Κάÿÿÿÿÿ8άβύσά1
+a
+java:S1128
+"?Remove this unused import 'org.elca.neosis.model.entity.Group'.(†΄•‡ώÿÿÿÿ8έβύσά1
+e
+java:S1128"CRemove this unused import 'org.elca.neosis.model.entity.QEmployee'.(Ι«ªϊÿÿÿÿ8έβύσά1

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" styleClass="project-detail-application" stylesheets="@../styles/ProjectDetailFragment.css"
+      VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets left="30" top="25"/>
+    </padding>
+    <Label fx:id="fragmentTitle" styleClass="project-detail-fragment-title"
+           text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCreateTitle">
+        <VBox.margin>
+            <Insets top="10.0"/>
+        </VBox.margin>
+    </Label>
+    <Separator maxWidth="890"/>
+    <HBox fx:id="errorContainer" alignment="CENTER_LEFT" maxWidth="890"
+          styleClass="project-detail-fragment-required-error-container" visible="false">
+        <padding>
+            <Insets top="10"/>
+        </padding>
+        <HBox prefWidth="890" spacing="420">
+            <padding>
+                <Insets bottom="20" left="26" top="10"/>
+            </padding>
+            <Label fx:id="missingRequiredFieldsMessage" minWidth="390"
+                   styleClass="project-detail-fragment-required-error-message"
+                   text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.missingRequiredFields"/>
+            <Label fx:id="closeButtonErrorContainer" styleClass="project-detail-fragment-required-error-close-button"
+                   text="x"/>
+        </HBox>
+    </HBox>
+    <VBox spacing="38">
+        <padding>
+            <Insets bottom="30" left="30" top="32"/>
+        </padding>
+        <GridPane hgap="50" vgap="38">
+            <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label fx:id="fragmentProjectNumberInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentProjectNumberInputLabel"/>
+                <Label styleClass="project-detail-fragment-input-required-symbol" text="*"/>
+            </HBox>
+            <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <TextField fx:id="projectNumberInput" maxWidth="210" prefHeight="30" prefWidth="210"
+                           GridPane.rowIndex="0"/>
+                <Label fx:id="projectNumberExistedMessage" contentDisplay="CENTER" prefHeight="30.0"
+                       styleClass="project-detail-fragment-business-error-message"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectNumberExisted"
+                       visible="false">
+                    <HBox.margin>
+                        <Insets left="20.0"/>
+                    </HBox.margin>
+                </Label>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label fx:id="fragmentProjectNameInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentProjectNameInputLabel"/>
+                <Label styleClass="project-detail-fragment-input-required-symbol" text="*"/>
+            </HBox>
+            <HBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="1">
+                <TextField fx:id="projectNameInput" maxWidth="650.0" prefHeight="30" prefWidth="650.0">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </TextField>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label fx:id="fragmentCustomerInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCustomerInputLabel"/>
+                <Label styleClass="project-detail-fragment-input-required-symbol" text="*"/>
+            </HBox>
+            <HBox GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="2">
+                <TextField fx:id="customerInput" maxWidth="650.0" prefHeight="30" prefWidth="650.0"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <Label fx:id="fragmentGroupInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentGroupInputLabel"/>
+                <Label styleClass="project-detail-fragment-input-required-symbol" text="*"/>
+            </HBox>
+            <ComboBox fx:id="groupInput" prefHeight="30" prefWidth="210" styleClass="project-detail-fragment-dropdown"
+                      GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                <Label fx:id="fragmentMembersInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentMembersInputLabel">
+                    <HBox.margin>
+                        <Insets top="3.0"/>
+                    </HBox.margin>
+                </Label>
+            </HBox>
+            <VBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="4">
+                <HBox GridPane.columnIndex="1" GridPane.columnSpan="11" GridPane.rowIndex="2">
+                    <TextField fx:id="membersInput" maxWidth="650.0" prefHeight="30" prefWidth="650.0"/>
+                    <Label fx:id="projectVisaNotValidMessage" prefHeight="30.0"
+                           styleClass="project-detail-fragment-business-error-message"
+                           text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.projectVisaNotValid"
+                           visible="false">
+                        <HBox.margin>
+                            <Insets left="20.0"/>
+                        </HBox.margin>
+                    </Label>
+                    <Label fx:id="invalidVisas" prefHeight="30.0"
+                           styleClass="project-detail-fragment-business-error-message" visible="false"/>
+                </HBox>
+            </VBox>
+            <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                <Label fx:id="fragmentStatusInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentStatusInputLabel"/>
+                <Label styleClass="project-detail-fragment-input-required-symbol" text="*"/>
+            </HBox>
+            <ComboBox fx:id="statusInput" prefHeight="30" prefWidth="210" styleClass="project-detail-fragment-dropdown"
+                      GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <HBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                <Label fx:id="fragmentStartDateInputLabel" styleClass="project-detail-fragment-input-title"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentStartDateInputLabel">
+                    <HBox.margin>
+                        <Insets top="3.0"/>
+                    </HBox.margin>
+                </Label>
+                <Label styleClass="project-detail-fragment-input-required-symbol" text="*"/>
+            </HBox>
+            <VBox spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+                <HBox spacing="100.0">
+                    <DatePicker fx:id="startDateInput" prefHeight="30" prefWidth="210"/>
+                    <HBox spacing="30.0">
+                        <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Label fx:id="fragmentEndDateInputLabel" minWidth="100"
+                                   styleClass="project-detail-fragment-input-title"
+                                   text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentEndDateInputLabel"/>
+                        </HBox>
+                        <DatePicker fx:id="endDateInput" prefHeight="30" prefWidth="210" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="0"/>
+                    </HBox>
+                </HBox>
+            </VBox>
+            <HBox spacing="10" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                <Label fx:id="startDateAfterEndDateErrors" contentDisplay="CENTER" prefHeight="30.0"
+                       styleClass="project-detail-fragment-business-error-message"
+                       text="%MainPerspective.MainContentComponent.ProjectDetailFragment.exception.startDateAfterEndDateError"
+                       visible="false">
+                </Label>
+            </HBox>
+            <columnConstraints>
+                <ColumnConstraints minWidth="160.0"/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+        </GridPane>
+    </VBox>
+    <Separator maxWidth="890"/>
+    <HBox spacing="50">
+        <padding>
+            <Insets left="490.0" top="50.0"/>
+        </padding>
+        <Button fx:id="cancelButton" prefHeight="35" prefWidth="175"
+                styleClass="project-detail-fragment-button, project-detail-fragment-cancel-button"
+                text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCancelButtonLabel"/>
+        <Button fx:id="submitButton" prefHeight="35" prefWidth="175"
+                styleClass="project-detail-fragment-button, project-detail-fragment-submit-button"
+                text="%MainPerspective.MainContentComponent.ProjectDetailFragment.label.fragmentCreateProjectButtonLabel"/>
+    </HBox>
+</VBox>

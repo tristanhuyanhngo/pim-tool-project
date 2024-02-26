@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox minHeight="1000" minWidth="290"
+      stylesheets="@../styles/MenuComponent.css"
+      VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml"
+      styleClass="menu-application"
+>
+    <padding>
+        <Insets left="120" />
+    </padding>
+    <VBox prefHeight="1000.0" prefWidth="568.0">
+        <padding>
+            <Insets top="35.0" />
+        </padding>
+        <Label fx:id="labelProjectLists" styleClass="menu-projects-list-button" text="%MainPerspective.MenuComponent.label.projects">
+         <VBox.margin>
+            <Insets bottom="35.0" />
+         </VBox.margin>
+        </Label>
+        <VBox>
+            <Label fx:id="labelNew" styleClass="menu-create-title" text="%MainPerspective.MenuComponent.label.new">
+            <VBox.margin>
+               <Insets bottom="20.0" />
+            </VBox.margin></Label>
+            <VBox>
+                <Label fx:id="labelNewProject" styleClass="menu-create-button, menu-create-button-active" text="%MainPerspective.MenuComponent.label.newProject">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Label>
+                <Label fx:id="labelNewCustomer" styleClass="menu-create-button" text="%MainPerspective.MenuComponent.label.newCustomer">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Label>
+                <Label fx:id="labelNewSupplier" styleClass="menu-create-button" text="%MainPerspective.MenuComponent.label.newSupplier" />
+            </VBox>
+        </VBox>
+      <HBox.margin>
+         <Insets left="100.0" />
+      </HBox.margin>
+    </VBox>
+    <Region prefHeight="1000.0" prefWidth="250.0" HBox.hgrow="ALWAYS" />
+    <Separator orientation="VERTICAL" />
+</HBox>
