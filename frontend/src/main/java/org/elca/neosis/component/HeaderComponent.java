@@ -61,3 +61,5 @@ public class HeaderComponent implements FXComponent {
         labelAppTitle.textProperty().bind(I18N.createStringBinding(ApplicationBundleKey.LABEL_APP_TITLE));
     }
 }
+
+// Create Pull Request
